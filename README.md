@@ -18,11 +18,11 @@ A brief description of the application here. Lorem ipsum dolor sit amet, consect
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] Proper use of Markdown
-- [ ] A concise and compelling elevator pitch
-- [ ] Description of key features
-- [ ] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [X] Proper use of Markdown
+- [X] A concise and compelling elevator pitch
+- [X] Description of key features
+- [X] Description of how you will use each technology
+- [X] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
 
@@ -65,12 +65,16 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - I will use correct HTML to structure my pages. I will have a seller page and a buyer page and pages for the listing items.
+- **CSS** - Will make the website look nice and fun to use, good color scheme and a format that works on diffrent screens.
+- **React** - Will allow users to login, listing display, display other users bids and use of React for routing and components.
+- **Service** - Backend service for:
+  -login
+  -sending listings out
+  -submitting bids
+  -showing total bids
+- **DB/Login** - Store users, bid data, listing data, Register and login users. Securely store users and only allow bidding on athenticated accounts.
+- **WebSocket** - As each user bids, total bids are listed to all users. As sellers send out listings, new listings are populated for all users.
 
 ## 🚀 AWS deliverable
 
