@@ -38,15 +38,15 @@ sequenceDiagram
     actor Seller1
     actor Seller2
     actor Seller3
+    Seller1->>Server: Item
+    Seller2->>Server: Item
+    Seller3->>Server: Item
+    Server->>Buyer1: Shows Item
+    Buyer1->>Server: Clicks Bid
     actor Buyer1
     actor Buyer2
     actor Buyer3
-    Seller1->>Server: Item
-    Server -->>Seller2: Seller3 + 1
-    Server -->>Seller3: Seller3 + 1
-    Seller2->> Buyer1: Seller1 + 1
-    Server -->>Seller3: Seller1 + 1
-    Server -->>Seller1: Seller1 + 1
+    
 ```
 
 ### Key features
