@@ -2,7 +2,7 @@
 
 [My Notes](notes.md)
 
-A brief description of the application here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Website that allows sellers to list items that people may show intrest in by bidding and if enough bids go through the seller must create and ship the product out to the buyers. If not enough bids are placed then no one has to pay for anything.
 
 
 > [!NOTE]
@@ -70,10 +70,10 @@ I am going to use the required technologies in the following ways.
 - **CSS** - Will make the website look nice and fun to use, good color scheme and a format that works on diffrent screens.
 - **React** - Will allow users to login, listing display, display other users bids and use of React for routing and components.
 - **Service** - Backend service for:
-  -login
-  -sending listings out
-  -submitting bids
-  -showing total bids
+  - login
+  - sending listings out
+  - submitting bids
+  - showing total bids
 - **DB/Login** - Store users, bid data, listing data, Register and login users. Securely store users and only allow bidding on athenticated accounts.
 - **WebSocket** - As each user bids, total bids are listed to all users. As sellers send out listings, new listings are populated for all users.
 
