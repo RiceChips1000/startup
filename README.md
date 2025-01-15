@@ -35,7 +35,9 @@ Imagine a website that allows for a item to be put up by a seller needing a minu
 
 ```mermaid
 sequenceDiagram
-
+    actor Seller1
+    actor Seller2
+    actor Seller3
     Seller1->>Server: Item
     Seller2->>Server: Item
     Seller3->>Server: Item
