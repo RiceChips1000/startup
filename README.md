@@ -43,6 +43,10 @@ sequenceDiagram
     Seller3->>Server: Item
     Server->>Buyer1: Shows Item
     Buyer1->>Server: Clicks Bid
+    Server->>Buyer2: Shows Item
+    Buyer2->>Server: Clicks Bid
+    Server->>Buyer3: Shows Item
+    Buyer3->>Server: Clicks Bid
     actor Buyer1
     actor Buyer2
     actor Buyer3
