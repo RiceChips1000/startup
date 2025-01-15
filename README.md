@@ -38,10 +38,10 @@ sequenceDiagram
     actor Seller1
     actor Seller2
     actor Seller3
-    Seller1->>Server: Seller3 + 1
+    Seller1->>Server: Item
     Server -->>Seller2: Seller3 + 1
     Server -->>Seller3: Seller3 + 1
-    Seller2->>Server: Seller1 + 1
+    Seller2->> Actor Jimmy: Seller1 + 1
     Server -->>Seller3: Seller1 + 1
     Server -->>Seller1: Seller1 + 1
 ```
