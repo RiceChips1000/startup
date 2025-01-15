@@ -35,14 +35,15 @@ Imagine a website that allows for a item to be put up by a seller needing a minu
 
 ```mermaid
 sequenceDiagram
-    Seller->>Server
-    Seller->>Server
-    Seller->>Server
-    actor Website
-    Buyer->>Server
-    Buyer->>Server
-    Buyer->>Server
-    You->>Website: Replace this with your design
+    actor Seller1
+    actor Seller2
+    actor Seller3
+    Seller1->>Server: Seller3 + 1
+    Server -->>Seller2: Seller3 + 1
+    Server -->>Seller3: Seller3 + 1
+    Seller2->>Server: Seller1 + 1
+    Server -->>Seller3: Seller1 + 1
+    Server -->>Seller1: Seller1 + 1
 ```
 
 ### Key features
