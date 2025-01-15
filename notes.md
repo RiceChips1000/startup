@@ -1,5 +1,10 @@
 # CS 260 Notes
 
+git commit -am "put comments here explaning what purpose is"
+git push   pushes to development
+
+git pull  pulls from main and updates what I am working on
+
 [My startup - Simon](https://simon.cs260.click)
 
 ## Helpful links
