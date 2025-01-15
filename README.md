@@ -32,6 +32,7 @@ Imagine a website that allows for a item to be put up by a seller needing a minu
 
 ![Design image](BidderDesign.png)
 
+Here is a sequence diagram that shows how to sellers and buyers would interact with the backend to list and buy items.
 
 ```mermaid
 sequenceDiagram
