@@ -72,21 +72,22 @@ I am going to use the required technologies in the following ways.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Server deployed and accessible with custom domain name** - [My server link](https://yourdomainnamehere.click).
+- [x] **Server deployed and accessible with custom domain name** - [My server link](https://quickbid.click).
 
 ## 🚀 HTML deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+ 
+- [X] **HTML pages** - I have six html pages that have pretty much everything I need for info and have html all over them
+- [X] **Proper HTML element usage** - I used everything correctly and made sure the formating was good and is readable and understandable by me
+- [X] **Links** - I added my github link on everypage and also source links that have my Bid images linked to more info and all pages are interconnected
+- [X] **Text** - All listings have an amount of bids and cash cost and have a info page with text
+- [X] **3rd party API placeholder** - On the Cart page the credit card info place is the API placeholder which gets bank info/credit/money api calls
+- [X] **Images** - I added placeholder images for the seller listings/buyer bids.
+- [X] **Login placeholder** - There is a login and it also redirects to a seller/buyer page
+- [X] **DB data placeholder** - Input box and submit buttn for login, sellers can sumbit listings with info, listings are pulled from the database and displayed to the users.
+- [X] **WebSocket placeholder** - The counting of current bids on each listing is done in realtime by the bid votes users place.
 
 ## 🚀 CSS deliverable
 

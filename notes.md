@@ -25,7 +25,7 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 ## HTML
 
-when doing Images use src = "" and for links use href = ""
+Added HTML to all the pages and made it so everything is interactable and functions correctly.
 
 
 ## CSS
