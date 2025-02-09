@@ -1,9 +1,13 @@
 /* Bidder Design */
+html {
+    margin: 0;
+}
 body {
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     min-width: 375px;
+    margin: 0;
   }
 
 header {
@@ -75,12 +79,16 @@ header {
   }
 
   nav{
+
     top: 0;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: rgb(0, 0, 0); /* Adjust as needed */
     padding: 10px 20px;
+    margin: 0;
+    padding: 0;
   }
 
   menu {
