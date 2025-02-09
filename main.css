@@ -113,6 +113,30 @@ header {
   }
 
 /* Makes shirts stats/links black */
+div a {
+    color: rgb(0, 0, 0); /* Ensures links are white */
+    text-decoration: none; /* Removes underline */
+  }
+  
+  div a:visited {
+    color: rgb(0, 0, 0); /* Ensures visited links are also white */
+  }
+  
+  div a:hover {
+    color: rgb(0, 0, 0); /* Optional: color change on hover */
+    text-decoration: underline;
+  }
+  
+  div a:active {
+    color: rgb(0, 0, 0); /* Optional: color change when link is clicked */
+  }
+
+  .login-signup-button {
+    color:white;
+    background-color: black;
+    border: white;
+    border-radius: 5%;
+  }
 
   @media (max-height: 600px) {
     header {
