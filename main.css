@@ -131,12 +131,6 @@ div a {
     color: rgb(0, 0, 0); /* Optional: color change when link is clicked */
   }
 
-  .login-signup-button {
-    color:white;
-    background-color: black;
-    border: white;
-    border-radius: 5%;
-  }
 
   @media (max-height: 600px) {
     header {
