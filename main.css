@@ -38,6 +38,10 @@ header {
     justify-content: space-around;
   }
   
+  p {
+    font-family: Arial, sans-serif;
+  }
+
   footer {
     flex: 0 30px;
     display: flex;
