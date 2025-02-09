@@ -93,12 +93,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Header, footer, and main content body** - I did not complete this part of the deliverable.
-- [ ] **Navigation elements** - I did not complete this part of the deliverable.
-- [ ] **Responsive to window resizing** - I did not complete this part of the deliverable.
-- [ ] **Application elements** - I did not complete this part of the deliverable.
-- [ ] **Application text content** - I did not complete this part of the deliverable.
-- [ ] **Application images** - I did not complete this part of the deliverable.
+- [X] **Header, footer, and main content body** - I added css to make the Header footer and main body all look good
+- [X] **Navigation elements** - I made the navigation look good and scale nicely with the flex to and go away as you scroll down.
+- [X] **Responsive to window resizing** - I added flex so that my website is resizeable and usuable on multiple devices.
+- [X] **Application elements** - 
+- [X] **Application text content** - made the text look nicer gave a better font and used opposite colors, white on black and black on white for a consise and modern look.
+- [X] **Application images** - placeholder images have been put in where sellers will put in the pictures to have bids placed.
 
 ## 🚀 React part 1: Routing deliverable
 
