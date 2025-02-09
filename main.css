@@ -132,21 +132,22 @@ header {
     color: lightgray; /* Optional: color change when link is clicked */
   }
 
-   /* Makes footer links black */
-   .footer-links a {
+   /* Makes footer links black  and center high*/
+   .footer-links {
     color: rgb(0, 0, 0); /* Ensures links are white */
     text-decoration: none; /* Removes underline */
   }
   
-  .footer-links a:visited {
+  .footer-links:visited {
     color: rgb(0, 0, 0); /* Ensures visited links are also white */
   }
   
-  .footer-links a:hover {
+  .footer-links:hover {
     color: rgb(0, 0, 0); /* Optional: color change on hover */
+    text-decoration: underline;
   }
   
-  .footer-links a:active {
+  .footer-links:active {
     color: rgb(0, 0, 0); /* Optional: color change when link is clicked */
   }
 
