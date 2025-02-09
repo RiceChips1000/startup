@@ -1,5 +1,6 @@
 /* Bidder Design */
 body {
+    font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     min-width: 375px;
@@ -12,7 +13,7 @@ header {
   main {
     flex: 1 calc(100vh - 110px);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: space-around;
   }
@@ -42,6 +43,23 @@ header {
     float: right;
   }
   
+  
+
+  main > div {
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap into new rows */
+    justify-content: center; /* Centers items in the row */
+    gap: 20px; /* Adds spacing between items */
+  }
+  .bid-item {
+    display: flex;
+    flex-direction: column; /* Stack image and text */
+    align-items: center; /* Center items */
+    text-align: center;
+    width: 200px; /* Set a width so items fit in a grid */
+  }
+
+
   @media (max-height: 600px) {
     header {
       display: none;
