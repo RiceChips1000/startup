@@ -50,19 +50,6 @@ header {
     list-style: none;
   }
   
-  .navbar-brand {
-    padding-left: 0.3em;
-    border-bottom: solid rgb(182, 182, 182) thin;
-  }
-  
-  menu .nav-item {
-    padding: 0 0.3em;
-  }
-  
-  footer a {
-    float: right;
-  }
-  
   .specific-page-title {
     flex: 0 10px;
     position: sticky;
@@ -134,8 +121,12 @@ header {
 
    /* Makes footer links black  and center high*/
    .footer-links {
-    color: rgb(0, 0, 0); /* Ensures links are white */
-    text-decoration: none; /* Removes underline */
+    font-family: Arial, sans-serif;
+    display: flex;   
+    top: 0;                
+    color: rgb(0, 0, 0);          
+    text-decoration: none;
+    align-items: right; 
   }
   
   .footer-links:visited {
