@@ -40,6 +40,19 @@ header {
   
   footer {
     flex: 0 30px;
+    display: flex;
+    flex-direction: column; /* Stack the elements vertically */
+    justify-content: center; /* Center the content */
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #000; /* Optional: Add a border for the line effect */
+  }
+
+  footer hr {
+    width: 100%; /* Make the line span the full width of the footer */
+    border: none; /* Remove default border */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
   }
   
   menu {
@@ -122,11 +135,11 @@ header {
    /* Makes footer links black  and center high*/
    .footer-links {
     font-family: Arial, sans-serif;
-    display: flex;   
-    top: 0;                
-    color: rgb(0, 0, 0);          
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(0, 0, 0);
     text-decoration: none;
-    align-items: right; 
   }
   
   .footer-links:visited {
