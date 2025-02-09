@@ -2,6 +2,13 @@
 html {
     margin: 0;
 }
+
+.website-title {
+    flex: 1; /* Allow it to grow and shrink based on the container's size */
+    font-size: 3vw; /* Font size will be 10% of the viewport width */
+    margin: 0;
+}
+
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -12,6 +19,8 @@ body {
 
 header {
     flex: 0 80px;
+    justify-content: center; /* Centers the links horizontally */
+    align-items: center;
   }
 
   title {
@@ -97,8 +106,11 @@ header {
 
   .header-links {
     font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center; /* Centers the links horizontally */
+    align-items: center;
     color: white;
-    padding-left: 5%;
+    padding-left: 7%;
     padding-right: 5%;
   }
 
@@ -118,6 +130,24 @@ header {
   
   .header-links a:active {
     color: lightgray; /* Optional: color change when link is clicked */
+  }
+
+   /* Makes footer links black */
+   .footer-links a {
+    color: rgb(0, 0, 0); /* Ensures links are white */
+    text-decoration: none; /* Removes underline */
+  }
+  
+  .footer-links a:visited {
+    color: rgb(0, 0, 0); /* Ensures visited links are also white */
+  }
+  
+  .footer-links a:hover {
+    color: rgb(0, 0, 0); /* Optional: color change on hover */
+  }
+  
+  .footer-links a:active {
+    color: rgb(0, 0, 0); /* Optional: color change when link is clicked */
   }
 
 /* Makes shirts stats/links black */
