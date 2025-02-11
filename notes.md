@@ -1,5 +1,10 @@
 # CS 260 Notes
 
+TO DEPLOY SIMON PASTE THIS OBS EDIT
+./deployFiles.sh -k C:/Users/rhysm/byu/cs260/keys/Blackeyeball1.pem -h quickbid.click -s simon
+
+
+
 git commit -am "put comments here explaning what purpose is"
 git push   pushes to development
 
@@ -42,7 +47,14 @@ I also used SVG to make the icon and logo for the app. This turned out to be a p
 
 ## React Part 1: Routing
 
-Setting up Vite and React was pretty simple. I had a bit of trouble because of conflicting CSS. This isn't as straight forward as you would find with Svelte or Vue, but I made it work in the end. If there was a ton of CSS it would be a real problem. It sure was nice to have the code structured in a more usable way.
+When you clone your source code from GitHub to a new location, the first thing you should do is run npm install in the project directory. This will cause NPM to download all of the previously installed packages and recreate the node_modules directory.
+Create your project directory
+Initialize it for use with NPM by running npm init -y
+Make sure .gitignore file contains node_modules
+Install any desired packages with npm install <package name here>
+Add require('<package name here>') to your application's JavaScript
+Use the code the package provides in your JavaScript
+Run your code with node index.js
 
 ## React Part 2: Reactivity
 
