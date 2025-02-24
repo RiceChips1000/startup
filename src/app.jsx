@@ -3,10 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
-import { Login } from './login/login';
-import { Play } from './play/play';
-import { Scores } from './scores/scores';
-import { About } from './about/about';
+import { Home } from './home/home';
+import { Accounts } from './accounts/accounts';
+import { Cart } from './cart/cart';
+import { Viewbid } from './viewbid/viewbid';
 import { Item_Info } from './item_info/item_info';
 import { Sell_Items } from './sell_items/sell_items';
 
@@ -28,7 +28,7 @@ export default function App() {
     <nav>
       <menu>
         <li className="header-links"><NavLink to="accounts">Login</NavLink></li>
-        <li className="header-links"><NavLink to="index">Home</NavLink></li>
+        <li className="header-links"><NavLink to="home">Home</NavLink></li>
         <li className="header-links"><NavLink to="accounts">Accounts</NavLink></li>
         <li className="header-links"><NavLink to="viewbid">View Bids</NavLink></li>
         <li className="header-links"><NavLink to="sell_items">Sell Items</NavLink></li>
@@ -44,6 +44,7 @@ export default function App() {
 
   <Routes>
     <Route path='/' element={<Home />} exact />
+    <Route path='/home' element={<Home />} exact />
     <Route path='/accounts' element={<Accounts />} />
     <Route path='/cart' element={<Cart />} />
     <Route path='/item_info' element={<Item_Info />} />
