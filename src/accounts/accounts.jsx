@@ -3,7 +3,7 @@ import React from 'react';
 export function Accounts() {
   return (
     <>
-    <h1 class="specific-page-title">Accounts</h1>
+    <h1 className="specific-page-title">Accounts</h1>
     <main>
         <h1>Here at QuickBid you can either buy or list products</h1>
         <form method="get" action="viewbid.html">
