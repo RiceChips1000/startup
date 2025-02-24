@@ -3,8 +3,11 @@ import { NavLink } from 'react-router-dom';
 
 export function Cart() {
   return (
-    <main>
+    <>
+
     <h1 className="specific-page-title">Your Cart</h1>
+    
+    <main>
       <div>
       <div className="bid-item">
         <NavLink to="/item_info" className="text-light text-decoration-none">
@@ -29,6 +32,6 @@ export function Cart() {
               <button>Buy</button>
             </div>
     </main>
-    
+    </>
   );
 }

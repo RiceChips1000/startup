@@ -2,12 +2,10 @@ import React from 'react';
 
 export function Accounts() {
   return (
-
+    <>
+    <h1 class="specific-page-title">Accounts</h1>
     <main>
-
-        <h1 class="specific-page-title">Your Bids</h1>
-  
-        <h1>Here at Quick Bid You Can Either List or Buy Products</h1>
+        <h1>Here at QuickBid you can either buy or list products</h1>
         <form method="get" action="viewbid.html">
           <div>
             <h1>Buyer</h1>
@@ -36,5 +34,6 @@ export function Accounts() {
             <button type="submit">Create</button>
           </form>
       </main>
+      </>
   );
 }
