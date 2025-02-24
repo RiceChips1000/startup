@@ -47,6 +47,8 @@ I also used SVG to make the icon and logo for the app. This turned out to be a p
 
 ## React Part 1: Routing
 
+Make sure you add routing to everything that has a link and if you want an image you need to use {} brackets
+
 When you clone your source code from GitHub to a new location, the first thing you should do is run npm install in the project directory. This will cause NPM to download all of the previously installed packages and recreate the node_modules directory.
 Create your project directory
 Initialize it for use with NPM by running npm init -y
