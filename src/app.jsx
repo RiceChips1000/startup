@@ -27,12 +27,12 @@ export default function App() {
 
     <nav>
       <menu>
-        <li className="header-links"><a href="accounts.html">Login</a></li>
-        <li className="header-links"><a href="index.html">Home</a></li>
-        <li className="header-links"><a href="accounts.html">Accounts</a></li>
-        <li className="header-links"><a href="viewbid.html">View Bids</a></li>
-        <li className="header-links"><a href="sell_items.html">Sell Items</a></li>
-        <li className="header-links"><a href="cart.html">Cart</a></li>
+        <li className="header-links"><NavLink to="accounts">Login</NavLink></li>
+        <li className="header-links"><NavLink to="index">Home</NavLink></li>
+        <li className="header-links"><NavLink to="accounts">Accounts</NavLink></li>
+        <li className="header-links"><NavLink to="viewbid">View Bids</NavLink></li>
+        <li className="header-links"><NavLink to="sell_items">Sell Items</NavLink></li>
+        <li className="header-links"><NavLink to="cart">Cart</NavLink></li>
       </menu>
     </nav>
 
