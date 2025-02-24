@@ -13,7 +13,7 @@ import { Sell_Items } from './sell_items/sell_items';
 export default function App() {
   return (
     <BrowserRouter>
-    <div className="body bg-dark text-light">
+    <div className="body bg-light text-dark">
     <header>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,8 +39,6 @@ export default function App() {
   <h1 className="website-title">Quick Bid<sup>&reg;</sup></h1>
     <hr />
   </header>
-
-  <h1 className="specific-page-title">Top Bids</h1>
 
   <Routes>
     <Route path='/' element={<Home />} exact />
