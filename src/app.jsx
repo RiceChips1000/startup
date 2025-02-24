@@ -7,6 +7,8 @@ import { Login } from './login/login';
 import { Play } from './play/play';
 import { Scores } from './scores/scores';
 import { About } from './about/about';
+import { Item_Info } from './item_info/item_info';
+import { Sell_Items } from './sell_items/sell_items';
 
 export default function App() {
   return (
@@ -40,7 +42,16 @@ export default function App() {
 
   <h1 className="specific-page-title">Top Bids</h1>
 
-  <main className='containerName-fluid bg-secondary text-center'>App components go here</main>
+  <Routes>
+    <Route path='/' element={<Home />} exact />
+    <Route path='/accounts' element={<Accounts />} />
+    <Route path='/cart' element={<Cart />} />
+    <Route path='/item_info' element={<Item_Info />} />
+    <Route path='/sell_items' element={<Sell_Items />} />
+    <Route path='/viewbid' element={<Viewbid />} />
+    <Route path='*' element={<NotFound />} />
+  </Routes>
+
   <footer>
     
     <a>Rhys Martinsen</a>
