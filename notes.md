@@ -62,6 +62,13 @@ Run your code with node index.js
 
 use console.log() to find values by printing them in the console when you want to see what a value is
 
+you can also time things
+console.time('demo time');
+for (let i = 0; i < 10000000; i++) {}
+// ... some code that takes a long time.
+console.timeEnd('demo time');
+// OUTPUT: demo time: 12.74 ms
+
 
 
 This was a lot of fun to see it all come together. I had to keep remembering to use React state instead of just manipulating the DOM directly.
