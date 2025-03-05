@@ -1,6 +1,7 @@
 # CS 260 Notes
 
 TO DEPLOY SIMON PASTE THIS OBS EDIT
+change the deployFIles to whatever deploy needed like react or wahtever
 ./deployFiles.sh -k C:/Users/rhysm/byu/cs260/keys/Blackeyeball1.pem -h quickbid.click -s simon
 
 
