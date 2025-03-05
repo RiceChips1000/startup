@@ -36,7 +36,7 @@ export default function App() {
       </menu>
     </nav>
 
-  <h1 className="website-title">Quickeeeeeeeeeeee Bid<sup>&reg;</sup></h1>
+  <h1 className="website-title">Quick Bid<sup>&reg;</sup></h1>
     <hr />
   </header>
 
