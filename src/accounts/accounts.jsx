@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function Accounts() {
   return (
@@ -6,7 +7,7 @@ export function Accounts() {
     <h1 className="specific-page-title">Accounts</h1>
     <main>
         <h1>Here at QuickBid you can either buy or list products</h1>
-        <form method="get" action="viewbid.html">
+        <form method="get">
           <div>
             <h1>Buyer</h1>
             <span>E-Mail:</span>
@@ -20,7 +21,7 @@ export function Accounts() {
           <button type="submit">Create</button>
         </form>
 
-        <form method="get" action="sell_items.html">
+        <form method="get" NavLink to="/sell_items">
             <h1>Seller</h1>
             <div>
               <span>E-Mail:</span>
