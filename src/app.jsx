@@ -4,13 +4,18 @@ import './app.css';
 
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Home } from './home/home';
-import { Accounts } from './accounts/accounts';
+import { Accounts } from './login/login';
 import { Cart } from './cart/cart';
 import { Viewbid } from './viewbid/viewbid';
 import { Item_Info } from './item_info/item_info';
 import { Sell_Items } from './sell_items/sell_items';
+import { AuthState } from './login/authState';
 
 export default function App() {
+  const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+  const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+  const [authState, setAuthState] = React.useState(currentAuthState);
+  
   return (
     <BrowserRouter>
     <div className="body bg-light text-dark">
