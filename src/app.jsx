@@ -36,7 +36,13 @@ export default function App() {
         <li className="header-links"><NavLink to="">Home</NavLink></li>
         <li className="header-links"><NavLink to="accounts">Accounts</NavLink></li>
         <li className="header-links"><NavLink to="viewbid">View Bids</NavLink></li>
-        <li className="header-links"><NavLink to="sell_items">Sell Items</NavLink></li>
+        {authState === AuthState.Authenticated && (
+                <li className='nav-item'>
+                  <NavLink className='nav-link' to='sell_items'>
+                    Sell Items
+                  </NavLink>
+                </li>
+              )}
         <li className="header-links"><NavLink to="cart">Cart</NavLink></li>
       </menu>
     </nav>
