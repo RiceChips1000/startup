@@ -4,17 +4,14 @@ import './app.css';
 
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Home } from './home/home';
-import { Accounts } from './login/login';
+import { Accounts } from './accounts/accounts';
 import { Cart } from './cart/cart';
 import { Viewbid } from './viewbid/viewbid';
 import { Item_Info } from './item_info/item_info';
 import { Sell_Items } from './sell_items/sell_items';
-import { AuthState } from './login/authState';
 
 export default function App() {
-  const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
-  const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
-  const [authState, setAuthState] = React.useState(currentAuthState);
+
   
   return (
     <BrowserRouter>
@@ -36,13 +33,7 @@ export default function App() {
         <li className="header-links"><NavLink to="">Home</NavLink></li>
         <li className="header-links"><NavLink to="accounts">Accounts</NavLink></li>
         <li className="header-links"><NavLink to="viewbid">View Bids</NavLink></li>
-        {authState === AuthState.Authenticated && (
-                <li className='nav-item'>
-                  <NavLink className='nav-link' to='sell_items'>
-                    Sell Items
-                  </NavLink>
-                </li>
-              )}
+        <li className="header-links"><NavLink to="sell_items">Sell Items</NavLink></li>
         <li className="header-links"><NavLink to="cart">Cart</NavLink></li>
       </menu>
     </nav>
