@@ -1,17 +1,19 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './app.css';
-
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Home } from './home/home';
-import { Accounts } from './accounts/accounts';
+import { Login } from './login/login';
 import { Cart } from './cart/cart';
 import { Viewbid } from './viewbid/viewbid';
 import { Item_Info } from './item_info/item_info';
 import { Sell_Items } from './sell_items/sell_items';
+import { AuthState } from './login/authState';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './app.css';
 
-export default function App() {
-
+function App() {
+  const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
+  const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+  const [authState, setAuthState] = React.useState(currentAuthState);
   
   return (
     <BrowserRouter>
@@ -29,12 +31,16 @@ export default function App() {
 
     <nav>
       <menu>
-        <li className="header-links"><NavLink to="accounts">Login</NavLink></li>
+        <li className="header-links"><NavLink to="login">Login</NavLink></li>
         <li className="header-links"><NavLink to="">Home</NavLink></li>
-        <li className="header-links"><NavLink to="accounts">Accounts</NavLink></li>
+        <li className="header-links"><NavLink to="login">Accounts</NavLink></li>
         <li className="header-links"><NavLink to="viewbid">View Bids</NavLink></li>
+        {authState === AuthState.Authenticated && (
         <li className="header-links"><NavLink to="sell_items">Sell Items</NavLink></li>
-        <li className="header-links"><NavLink to="cart">Cart</NavLink></li>
+        )}
+        {authState === AuthState.Authenticated && (
+        <li className="header-links"><NavLink to="cart">Cart</NavLink></li> 
+        )}
       </menu>
     </nav>
 
@@ -43,8 +49,15 @@ export default function App() {
   </header>
 
   <Routes>
-    <Route path='/' element={<Home />} exact />
-    <Route path='/accounts' element={<Accounts />} />
+    <Route path='/login' element={<Login 
+      userName={userName}
+      authState={authState}
+      onAuthChange={(userName, authState) => {
+      setAuthState(authState);
+      setUserName(userName);
+      }}
+    />} exact />
+    <Route path='/' element={<Home />} />
     <Route path='/cart' element={<Cart />} />
     <Route path='/item_info' element={<Item_Info />} />
     <Route path='/sell_items' element={<Sell_Items />} />
@@ -67,3 +80,5 @@ export default function App() {
 function NotFound() {
     return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
   }
+
+export default App;
