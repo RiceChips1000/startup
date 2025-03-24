@@ -20,7 +20,32 @@ export function ListingItemInfo() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(values);
+        
+        let storedValues = { ...values };
+
+        // Convert image file to a URL if an image is uploaded
+        if (storedValues.image) {
+            storedValues.image = URL.createObjectURL(storedValues.image);
+        }
+
+        // Retrieve existing items from localStorage
+        let existingItems = JSON.parse(localStorage.getItem('listingItems')) || [];
+
+        // Add the new item to the list
+        existingItems.push(storedValues);
+
+        // Save the updated list back to localStorage
+        localStorage.setItem('listingItems', JSON.stringify(existingItems));
+
+        alert("Item saved to local storage!");
+
+        // Reset the form
+        setValues({
+            name: '',
+            cost: '',
+            bids: '',
+            image: null
+        });
     };
 
     return (
@@ -29,22 +54,48 @@ export function ListingItemInfo() {
                 <h1>List Item</h1>
 
                 <label htmlFor="name">Product Name*</label>
-                <input type="text" placeholder='Enter Product Name' name='name'
-                    onChange={handleChanges} required />
+                <input 
+                    type="text" 
+                    placeholder='Enter Product Name' 
+                    name='name'
+                    value={values.name}
+                    onChange={handleChanges} 
+                    required 
+                />
 
                 <label htmlFor="cost">Price*</label>
-                <input type="text" placeholder='Enter Cost In Dollars' name='cost'
-                    onChange={handleChanges} required />
+                <input 
+                    type="text" 
+                    placeholder='Enter Cost In Dollars' 
+                    name='cost'
+                    value={values.cost}
+                    onChange={handleChanges} 
+                    required 
+                />
 
                 <label htmlFor="bids">Bids Needed*</label>
-                <input type="text" placeholder='Enter Number Of Bids Needed' name='bids'
-                    onChange={handleChanges} required />
+                <input 
+                    type="text" 
+                    placeholder='Enter Number Of Bids Needed' 
+                    name='bids'
+                    value={values.bids}
+                    onChange={handleChanges} 
+                    required 
+                />
 
                 <label htmlFor="image">Image</label>
-                <input type="file" placeholder='File From Computer' name='image'
-                    onChange={handleChanges}/>
+                <input 
+                    type="file" 
+                    name='image'
+                    onChange={handleChanges}
+                />
 
-                <button type='reset'>Reset</button>
+                <button type='reset' onClick={() => setValues({
+                    name: '',
+                    cost: '',
+                    bids: '',
+                    image: null
+                })}>Reset</button>
                 <button type='submit'>Submit</button>
             </form>
         </div>
