@@ -10,7 +10,7 @@ export function Item_Info() {
         <p>This item is made of ------</p>
         <p>It was made in america</p>
         <p>Very Cheap no cost</p>
-        <h3><button>Bid</button></h3>
+        <h3><button onClick={() => alert("Will be implemented when storage is made(will put it inside the users cart")}>Bid</button></h3>
     </main>
   );
 }
