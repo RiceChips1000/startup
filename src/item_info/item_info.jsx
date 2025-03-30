@@ -5,6 +5,7 @@ export function Item_Info() {
   return (
     <main>
         <h1>Item Info</h1>
+        <h4>THIS PAGE WILL WORK ONCE I IMPLEMENT THE ACTUAL STORAGE SYSTEM SO THAT I CAN GRAB INFO MORE LOGICALLY</h4>
         <span><img src={"/ShirtDemo.png"} width="200" alt="Shirt" classNameName="img-fluid" /><p>$45 | 5/100 Bids</p></span>
         <p>This item is made of ------</p>
         <p>It was made in america</p>

@@ -1,15 +1,17 @@
 {
   "dependencies": {
     "bootstrap": "^5.3.3",
+    "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
-    "react-router-dom": "^7.1.5"
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.4.0"
   },
   "name": "startup",
   "version": "1.0.0",
   "description": "[My Notes](notes.md)",
   "main": "index.js",
   "devDependencies": {
-    "vite": "^6.1.1"
+    "vite": "^6.2.3"
   },
   "scripts": {
     "dev": "vite",
@@ -19,5 +21,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "homepage": "https://github.com/RiceChips1000/startup#readme"
+  "homepage": "https://github.com/RiceChips1000/startup#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RiceChips1000/startup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RiceChips1000/startup/issues"
+  }
 }
