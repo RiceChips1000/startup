@@ -112,8 +112,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [X] **All functionality implemented or mocked out** - I made sure I added the ability to sell things and a lot of the buttons say they will do stuff I will add it with my storage
+- [X] **Hooks** - I used useEffect for my listings and made sure stuff all works good. Will be adding more as I make ALL of the buttons work with the database.
 
 ## 🚀 Service deliverable
 
