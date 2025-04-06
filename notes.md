@@ -3,6 +3,7 @@
 TO DEPLOY SIMON PASTE THIS OBS EDIT
 change the deployFIles to whatever deploy needed like react or wahtever
 ./deployFiles.sh -k C:/Users/rhysm/byu/cs260/keys/Blackeyeball1.pem -h quickbid.click -s simon
+./deployReact.sh -k ~/byu/cs260/keyForWebsite2.pem -h quickbid.click -s simon
 
 
 
