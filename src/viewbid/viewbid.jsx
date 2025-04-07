@@ -21,7 +21,7 @@ export function Viewbid() {
               <div key={index} className="bid-item">
                 <NavLink to="/item_info">
                   <img src={item.image || "/ShirtDemo.png"} width="200" alt={item.name} className="img-fluid" />
-                  <p>${item.cost} | {item.bids} Bids</p>
+                  <p>{item.name} | ${item.cost} | {item.bids} Bids</p>
                 </NavLink>
               </div>
             ))

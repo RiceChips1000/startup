@@ -3,11 +3,14 @@ import { NavLink } from 'react-router-dom';
 import './item_object.css';
 
 export function ListingItemInfo() {
+    const userName = localStorage.getItem('userName');
+    
     const [values, setValues] = useState({
         name: '',
         cost: '',
         bids: '',
-        image: null
+        image: null,
+        seller: userName
     });
 
     const handleChanges = (e) => {
