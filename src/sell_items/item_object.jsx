@@ -8,7 +8,8 @@ export function ListingItemInfo() {
     const [values, setValues] = useState({
         name: '',
         cost: '',
-        bids: '',
+        bids: 0,
+        bidsNeeded: '',
         image: null,
         seller: userName
     });
@@ -46,7 +47,9 @@ export function ListingItemInfo() {
         setValues({
             name: '',
             cost: '',
-            bids: '',
+            bids: 0,
+            bidsNeeded: '',
+            about: '',
             image: null
         });
     };
@@ -76,12 +79,22 @@ export function ListingItemInfo() {
                     required 
                 />
 
-                <label htmlFor="bids">Bids Needed*</label>
+                <label htmlFor="bidsNeeded">Bids Needed*</label>
                 <input 
                     type="text" 
                     placeholder='Enter Number Of Bids Needed' 
-                    name='bids'
-                    value={values.bids}
+                    name='bidsNeeded'
+                    value={values.bidsNeeded}
+                    onChange={handleChanges} 
+                    required 
+                />
+
+                <label htmlFor="about">Product Details*</label>
+                <textarea 
+                    type="text" 
+                    placeholder='Describe the Product' 
+                    name='about'
+                    value={values.about}
                     onChange={handleChanges} 
                     required 
                 />
@@ -96,9 +109,11 @@ export function ListingItemInfo() {
                 <button type='reset' onClick={() => setValues({
                     name: '',
                     cost: '',
-                    bids: '',
+                    bidsNeeded: '',
                     image: null
-                })}>Reset</button>
+                })}>
+                    Reset
+                    </button>
                 <button type='submit'>Submit</button>
             </form>
         </div>

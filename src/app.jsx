@@ -59,7 +59,7 @@ function App() {
     />} exact />
     <Route path='/' element={<Home />} />
     <Route path='/cart' element={<Cart />} />
-    <Route path='/item_info' element={<Item_Info />} />
+    <Route path='/item_info/:id' element={<Item_Info />} />
     <Route path='/sell_items' element={<Sell_Items />} />
     <Route path='/viewbid' element={<Viewbid />} />
     <Route path='*' element={<NotFound />} />
