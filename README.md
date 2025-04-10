@@ -113,6 +113,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
 - [X] **All functionality implemented or mocked out** - I made it so sellers can post listings and take them down, users can bid once on each item and when they do bid it goes into their cart and they can either remove it or buy it which clears their cart.
+Set Interval used to clear cart when user has not been active in a while(30 minutes)
 - [X] **Hooks** - Used hooks for the bid counting with useState and also the setting of my items for viewing and pulling them from storage I used useEffect on the id fetching which allows the user to see the bids that have all been posted and gets updated or any other listings are posted
 
 A lot of the features here will be flushed out with my data storage I will implement so if anything is buggy it will get fixed :
