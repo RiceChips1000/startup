@@ -112,8 +112,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [X] **All functionality implemented or mocked out** - I made sure I added the ability to sell things and a lot of the buttons say they will do stuff I will add it with my storage
-- [X] **Hooks** - I used useEffect for my listings and made sure stuff all works good. Will be adding more as I make ALL of the buttons work with the database.
+- [X] **All functionality implemented or mocked out** - I made it so sellers can post listings and take them down, users can bid once on each item and when they do bid it goes into their cart and they can either remove it or buy it which clears their cart.
+- [X] **Hooks** - Used hooks for the bid counting with useState and also the setting of my items for viewing and pulling them from storage I used useEffect on the id fetching which allows the user to see the bids that have all been posted and gets updated or any other listings are posted
 
 ## 🚀 Service deliverable
 
