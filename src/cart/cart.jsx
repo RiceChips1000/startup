@@ -16,13 +16,14 @@ export function Cart() {
     localStorage.setItem('userCart', JSON.stringify(updatedCart));
   };
 
+  /*This code will work once I get the data base set up correctly cause the item info I made based off the url and this would be to silly so yeah*/
   return (
     <>
       <h1 className="specific-page-title">Your Cart</h1>
 
 
 
-    //This code will work once I get the data base set up correctly cause the item info I made based off the url and this would be to silly so yeah
+    
       <main>
         {cartItems.length > 0 ? (
           cartItems.map((item, index) => (
