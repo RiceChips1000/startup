@@ -1,38 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
-
 export function Cart() {
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    // Get cart items from localStorage
+    const userCart = JSON.parse(localStorage.getItem('userCart')) || [];
+    setCartItems(userCart);
+  }, []);
+
+  const handleRemove = (nameToRemove) => {
+    const updatedCart = cartItems.filter(item => item.name !== nameToRemove);
+    setCartItems(updatedCart);
+    localStorage.setItem('userCart', JSON.stringify(updatedCart));
+  };
+
   return (
     <>
+      <h1 className="specific-page-title">Your Cart</h1>
 
-    <h1 className="specific-page-title">Your Cart</h1>
-    
-    <main>
-      <div>
-      <div className="bid-item">
-        <NavLink to="/item_info" className="text-light text-decoration-none">
-        <img src={"/ShirtDemo.png"} width="200" alt="Shirt" className="img-fluid" />
-        <p className="mt-2">$45 | 5/100 Bids</p>
-        </NavLink></div>
-        <p><button onClick={() => alert("will add the ability to remove bids in cart with storage part")}>Remove Bid</button></p>
-      </div>
-      <div>
-        <div className="bid-item">        
-        <NavLink to="/item_info" className="text-light text-decoration-none">
-        <img src={"/ShirtDemo.png"} width="200" alt="Shirt" className="img-fluid" />
-        <p className="mt-2">$45 | 5/100 Bids</p>
-        </NavLink>
-        </div>
-        <p><button onClick={() => alert("will add the ability to remove bids in cart with storage part")}>Remove Bid</button></p>
-      </div>
-            <div>
-              <h1>Purchase</h1>
-              <span>Credit-Card:</span>
-              <input type="text" placeholder="123-456-7890"/>
-              <button onClick={() => alert("Will have it reset/api calls once I add storage")}>Buy</button>
+      <main>
+        {cartItems.length > 0 ? (
+          cartItems.map((item, index) => (
+            <div key={index}>
+              <div className="bid-item">
+            <NavLink to={`/item_info/${index}`} className="text-light text-decoration-none">
+                  <img src={item.image || "/ShirtDemo.png"} width="200" alt={item.name} className="img-fluid" />
+                  <p className="mt-2">${item.cost} | {item.bids}/{item.bidsNeeded} Bids</p>
+                </NavLink>
+              </div>
+              <p>
+                <button onClick={() => handleRemove(item.name)}>
+                  Remove Bid
+                </button>
+              </p>
             </div>
-    </main>
+          ))
+        ) : (
+          <p>No items in your cart.</p>
+        )}
+
+        {cartItems.length > 0 && (
+          <div>
+            <h1>Purchase</h1>
+            <span>Credit Card:</span>
+            <input type="text" placeholder="1234-5678-9012-3456" />
+            <button onClick={() => {
+              localStorage.removeItem('userCart');
+              setCartItems([]); // clear UI
+              alert("Thanks for buying this stuff yo! Your cart has been cleared.");
+            }}>
+              Buy
+            </button>
+          </div>
+        )}
+      </main>
     </>
   );
 }

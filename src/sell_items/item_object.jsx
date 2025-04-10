@@ -37,7 +37,7 @@ export function ListingItemInfo() {
 
         // Add the new item to the list
         existingItems.push(storedValues);
-
+ 
         // Save the updated list back to localStorage
         localStorage.setItem('listingItems', JSON.stringify(existingItems));
 
