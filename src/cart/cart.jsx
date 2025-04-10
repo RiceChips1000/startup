@@ -38,7 +38,7 @@ export function Cart() {
       clearInterval(interval);
       window.removeEventListener('click', updateLastInteraction);
       window.removeEventListener('scroll', updateLastInteraction);
-      window.removeEventListener('keudown', updateLastInteraction);
+      window.removeEventListener('keydown', updateLastInteraction);
     };
   }, [lastInteraction]);
 
