@@ -31,3 +31,12 @@ export function ListingItemInfo() {
     alert("Item listed!");
     setValues({ name: '', cost: '', bids: 0, bidsNeeded: '', about: '', image: null, seller: userName });
   };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h1>List Item</h1>
+      <input type="text" name="name" value={values.name} onChange={handleChanges} placeholder="Product Name" required />
+      
+    </form>
+  );
+}
