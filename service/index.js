@@ -2,11 +2,10 @@ const express = require('express');
 const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
-app.use(express.static('public'));
-
+app.use(express.static('public')); 
 
 app.get('/', (req, res) => {
-  res.send('Does this work?');
+  res.sendFile(__dirname + '/public/index.html'); /
 });
 
 app.listen(port, () => {
