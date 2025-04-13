@@ -17,7 +17,7 @@ export function Viewbid() {
         <div>
           {listings.length > 0 ? listings.map((item, index) => (
             <div key={index} className="bid-item">
-              <img src={item.image || "/ShirtDemo.png"} width="200" alt={item.name} />
+              <img src={item.image || "/assets/ShirtDemo.png"} width="200" alt={item.name} />
               <p>{item.name} | ${item.cost} | {item.bids}/{item.bidsNeeded} Bids</p>
             </div>
           )) : (

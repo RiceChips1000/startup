@@ -46,7 +46,7 @@ export function Cart() {
             <div key={index}>
               <div className="bid-item">
                 <NavLink to={`/item_info/${index}`} className="text-light text-decoration-none">
-                  <img src={item.image || "/ShirtDemo.png"} width="200" alt={item.name} className="img-fluid" />
+                  <img src={item.image || "/assets/ShirtDemo.png"} width="200" alt={item.name} className="img-fluid" />
                   <p className="mt-2">{item.name} | ${item.cost} | {item.bids}/{item.bidsNeeded} Bids</p>
                 </NavLink>
               </div>
