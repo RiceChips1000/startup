@@ -24,3 +24,20 @@ app.post('/api/listings', (req, res) => {
   listings.push(req.body);
   res.status(201).json({ message: "Listing added" });
 });
+
+// Get user cart
+app.get('/api/cart/:user', (req, res) => {
+    const user = req.params.user;
+    res.json(userCarts[user] || []);
+  });
+  
+  // Update user cart
+  app.post('/api/cart/:user', (req, res) => {
+    const user = req.params.user;
+    userCarts[user] = req.body;
+    res.json({ message: "Cart updated" });
+  });
+  
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+  });
