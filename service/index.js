@@ -1,25 +1,25 @@
-onst express = require('express');
+const express = require('express');
 const path = require('path');
 const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
-app.use(express.static('public')); // serve static frontend files
-app.use(express.json()); // parse JSON request bodies
+app.use(express.static('public')); 
+app.use(express.json()); 
 
-// In-memory cart store and timers
-const cartStore = new Map();        // user => cart items
-const cartTimers = new Map();       // user => timeout ID
 
-// Save/update cart for user and reset inactivity timer
+const cartStore = new Map();        
+const cartTimers = new Map();       
+
+
 function saveCartForUser(user, cartItems) {
   cartStore.set(user, cartItems);
 
-  // Clear old timer
+  
   if (cartTimers.has(user)) {
     clearTimeout(cartTimers.get(user));
   }
 
-  // Set new 30-minute auto-clear timer
+  
   const timeoutId = setTimeout(() => {
     cartStore.delete(user);
     cartTimers.delete(user);
@@ -29,14 +29,14 @@ function saveCartForUser(user, cartItems) {
   cartTimers.set(user, timeoutId);
 }
 
-// API: Get cart for user
+
 app.get('/api/cart/:user', (req, res) => {
   const user = req.params.user;
   const cart = cartStore.get(user) || [];
   res.json(cart);
 });
 
-// API: Update cart for user
+
 app.post('/api/cart/:user', (req, res) => {
   const user = req.params.user;
   const cartItems = req.body;
@@ -45,7 +45,7 @@ app.post('/api/cart/:user', (req, res) => {
   res.json({ message: "Cart updated" });
 });
 
-// Catch-all route for React Router frontend routes like /cart, /viewbid, etc.
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
