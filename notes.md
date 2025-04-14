@@ -1,4 +1,10 @@
 # CS 260 Notes
+use npm run build 
+then manually move files cause its sus
+
+
+then run node index.js in another file
+
 
 TO DEPLOY SIMON PASTE THIS OBS EDIT
 change the deployFIles to whatever deploy needed like react or wahtever
