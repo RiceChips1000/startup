@@ -7,7 +7,7 @@ const port = process.argv.length > 2 ? process.argv[2] : 4000;
 app.use(express.json());
 app.use(express.static('public'));
 
-
+// Serve homepage
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -35,15 +35,16 @@ app.get('/api/cart/:user', (req, res) => {
     }
   }
 
- 
+  // No cart found
   res.json([]);
 });
 
+// Save/update a user's cart
 app.post('/api/cart/:user', (req, res) => {
   const user = req.params.user;
   const cartData = {
     cart: req.body,
-    timestamp: Date.now(), 
+    timestamp: Date.now(), // Update timestamp on write
   };
 
   const cartFile = path.join(__dirname, `cart_${user}.json`);
