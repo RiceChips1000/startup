@@ -4,9 +4,9 @@ const path = require('path');
 const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 //const { addTwoNumbers } = require("./module.js") example stuff I was trying for if I add more functions and want to be more organized
+//const i = addTwoNumbers(1,2)
 
 
-const i = addTwoNumbers(1,2)
 app.use(express.json());
 app.use(express.static('public'));
 
