@@ -3,10 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
-//const { addTwoNumbers } = require("./module.js") example stuff I was trying for if I add more functions and want to be more organized
 
-
-const i = addTwoNumbers(1,2)
 app.use(express.json());
 app.use(express.static('public'));
 
@@ -23,6 +20,14 @@ app.get('/api/cart/:user', (req, res) => {
   if (fs.existsSync(cartFile)) {
     try {
       const data = JSON.parse(fs.readFileSync(cartFile));
+      const now = Date.now();
+
+      // 30 minutes = 30 * 60 * 1000 ms = 1800000
+      if (now - data.timestamp > 1800000) {
+        fs.unlinkSync(cartFile); // Clear expired cart
+        return res.json([]);
+      }
+
       return res.json(data.cart);
     } catch (err) {
       console.error("Failed to read cart:", err);
@@ -39,7 +44,7 @@ app.post('/api/cart/:user', (req, res) => {
   const user = req.params.user;
   const cartData = {
     cart: req.body,
-    timestamp: Date.now(),
+    timestamp: Date.now(), // Update timestamp on write
   };
 
   const cartFile = path.join(__dirname, `cart_${user}.json`);
@@ -53,7 +58,7 @@ app.post('/api/cart/:user', (req, res) => {
   }
 });
 
-// catches all the routes
+// Catch-all route to serve index.html for other paths
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
