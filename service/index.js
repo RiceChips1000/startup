@@ -24,7 +24,7 @@ app.get('/api/cart/:user', (req, res) => {
 
       // 30 minutes = 30 * 60 * 1000 ms = 1800000
       if (now - data.timestamp > 1800000) {
-        fs.unlinkSync(cartFile); // Clear expired cart
+        fs.unlinkSync(cartFile); // Clears the  expired cart
         return res.json([]);
       }
 
@@ -44,7 +44,7 @@ app.post('/api/cart/:user', (req, res) => {
   const user = req.params.user;
   const cartData = {
     cart: req.body,
-    timestamp: Date.now(), // Update timestamp on write
+    timestamp: Date.now(), 
   };
 
   const cartFile = path.join(__dirname, `cart_${user}.json`);
@@ -56,6 +56,11 @@ app.post('/api/cart/:user', (req, res) => {
     console.error("Failed to write cart:", err);
     res.status(500).send("Server error saving cart.");
   }
+});
+
+// catches all the routes
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Start server
