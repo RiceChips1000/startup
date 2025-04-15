@@ -3,15 +3,31 @@ import './cart.css';
 
 export function Cart() {
   const [cartItems, setCartItems] = useState([]);
+  const [bearImage, setBearImage] = useState('');
 
-  // Function to generate random bear image URL using the random height
-  const getRandomBearImage = () => {
-    const width = Math.floor(Math.random() * (400 - 200) + 200);
-    const height = Math.floor(Math.random() * (400 - 200) + 200);
-    return `https://placebear.com/${width}/${height}`;
+  // Function to fetch random bear image
+  const fetchBearImage = async () => {
+    try {
+      const width = Math.floor(Math.random() * (400 - 200) + 200);
+      const height = Math.floor(Math.random() * (400 - 200) + 200);
+      const response = await fetch(`https://placebear.com/${width}/${height}`, {
+        mode: 'no-cors',
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        }
+      });
+      if (response.ok || response.type === 'opaque') {
+        setBearImage(`https://placebear.com/${width}/${height}`);
+      }
+    } catch (error) {
+      console.error('Error fetching bear image:', error);
+      // Set a default bear image URL if the fetch fails
+      setBearImage('https://placebear.com/200/200');
+    }
   };
 
   useEffect(() => {
+    fetchBearImage();
     fetch('/api/cart')
       .then(res => {
         if (res.status === 401) throw new Error('Not logged in');
@@ -61,7 +77,7 @@ export function Cart() {
     <main className="cart-container">
       <div className="fun-bear-container">
         <img 
-          src={getRandomBearImage()} 
+          src={bearImage} 
           alt="A friendly bear" 
           className="fun-bear-image"
         />
