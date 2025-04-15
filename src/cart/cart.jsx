@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import './cart.css';
 
 export function Cart() {
   const [cartItems, setCartItems] = useState([]);
 
   // Function to generate random bear image URL
   const getRandomBearImage = () => {
-    const width = Math.floor(Math.random() * (400 - 200) + 200); // Random width between 200-400
-    const height = Math.floor(Math.random() * (400 - 200) + 200); // Random height between 200-400
+    const width = Math.floor(Math.random() * (400 - 200) + 200);
+    const height = Math.floor(Math.random() * (400 - 200) + 200);
     return `https://placebear.com/${width}/${height}`;
   };
 
@@ -17,12 +18,7 @@ export function Cart() {
         return res.json();
       })
       .then(data => {
-        // Add random bear image to each cart item
-        const itemsWithBears = data.map(item => ({
-          ...item,
-          image: getRandomBearImage()
-        }));
-        setCartItems(itemsWithBears);
+        setCartItems(data);
       })
       .catch(err => {
         console.error(err.message);
@@ -57,30 +53,49 @@ export function Cart() {
   };
 
   return (
-    <main>
+    <main className="cart-container">
+      <div className="fun-bear-container">
+        <img 
+          src={getRandomBearImage()} 
+          alt="A friendly bear" 
+          className="fun-bear-image"
+        />
+      </div>
       <h1>Your Cart</h1>
       {cartItems.length === 0 ? (
         <p>Your cart is empty or you're not logged in.</p>
       ) : (
-        <>
+        <div className="cart-items">
           {cartItems.map((item, index) => (
             <div key={index} className="cart-item">
               <img 
                 src={item.image} 
-                alt={`Bear for ${item.name}`}
-                style={{ 
-                  maxWidth: '300px',
-                  height: 'auto',
-                  borderRadius: '8px',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                alt={item.name}
+                className="cart-item-image"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/ShirtDemo.png';
                 }}
               />
-              <p>{item.name} - ${item.cost}</p>
-              <button onClick={() => removeFromCart(item.name)}>Remove</button>
+              <div className="cart-item-info">
+                <h3>{item.name}</h3>
+                <p className="price">${item.cost}</p>
+                <button 
+                  onClick={() => removeFromCart(item.name)}
+                  className="remove-button"
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           ))}
-          <button onClick={purchaseCart} style={{ marginTop: '20px' }}>Purchase All</button>
-        </>
+          <button 
+            onClick={purchaseCart} 
+            className="purchase-button"
+          >
+            Purchase All
+          </button>
+        </div>
       )}
     </main>
   );
