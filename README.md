@@ -83,7 +83,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [X] **Proper HTML element usage** - I used everything correctly and made sure the formating was good and is readable and understandable by me
 - [X] **Links** - I added my github link on everypage and also source links that have my Bid images linked to more info and all pages are interconnected
 - [X] **Text** - All listings have an amount of bids and cash cost and have a info page with text
-- [X] **3rd party API placeholder** - An api that displays motavational quotes to inspire shoppers and lift their moods to increase spending
+- [X] **3rd party API placeholder** - An api that shows pictures of bears to improve users moods so they are more likely to spend more money and also buy things.
 - [X] **Images** - I added placeholder images for the seller listings/buyer bids.
 - [X] **Login placeholder** - There is a login and it also redirects to a seller/buyer page
 - [X] **DB data placeholder** - Input box and submit buttn for login, sellers can sumbit listings with info, listings are pulled from the database and displayed to the users.
@@ -122,11 +122,13 @@ A lot of the features here will be flushed out with my data storage I will imple
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
+
+- [x] **Node.js/Express HTTP service** - Installed Express with NPM. Default port on 4000.js. Node works good!
+- [x] **Static middleware for frontend** -  endpoints in `service/index` frontend calls static files and such
+- [x] **Calls to third party endpoints** - Cart page calls bear api and loads random bear image that increases the happines of the user which hopefully will make them buy more stuff.
+- [x] **Backend service endpoints** - Backend stuff in index, for cart, listings, and viewbid
+- [x] **Frontend calls service endpoints** - Frontend fetches and calls all needed information from backend and endpoints work,  and local storage has been phased out
+- [x] **Supports registration, login, logout, and restricted endpoint** - Fully supported authentication and restricted access to cart and stuff if user is not logged in and endpoints are restricted.
 
 ## 🚀 DB/Login deliverable
 
