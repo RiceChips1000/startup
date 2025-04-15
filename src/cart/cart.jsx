@@ -4,7 +4,7 @@ import './cart.css';
 export function Cart() {
   const [cartItems, setCartItems] = useState([]);
 
-  // Function to generate random bear image URL
+  // Function to generate random bear image URL using the random height
   const getRandomBearImage = () => {
     const width = Math.floor(Math.random() * (400 - 200) + 200);
     const height = Math.floor(Math.random() * (400 - 200) + 200);
@@ -18,7 +18,12 @@ export function Cart() {
         return res.json();
       })
       .then(data => {
-        setCartItems(data);
+        // Set default image for items without an image
+        const itemsWithDefaultImages = data.map(item => ({
+          ...item,
+          image: item.image || '/ShirtDemo.png'
+        }));
+        setCartItems(itemsWithDefaultImages);
       })
       .catch(err => {
         console.error(err.message);
@@ -63,7 +68,7 @@ export function Cart() {
       </div>
       <h1>Your Cart</h1>
       {cartItems.length === 0 ? (
-        <p>Your cart is empty or you're not logged in.</p>
+        <p>Your cart is empty.</p>
       ) : (
         <div className="cart-items">
           {cartItems.map((item, index) => (
