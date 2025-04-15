@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 
 export function Viewbid() {
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
-    // Retrieve listings from local storage
-    const storedListings = JSON.parse(localStorage.getItem('listingItems')) || [];
-    setListings(storedListings);
-  }, []);
-  return (
-    <>
-      <h1 className="specific-page-title">Popular Bids</h1>
+    // Fetch listings from the backend API
+    fetch('/api/listings')
+      .then(async res => {
+        const text = await res.text();
+        console.log('Raw response:', text);  // Log raw response
+        return JSON.parse(text); // Try parsing manually in case of HTML or other issues
+      })
+      .then(data => {
+        console.log('Listings loaded:', data);  // Log parsed data
+        setListings(data);  // Set the state with the listings data
+      })
+      .catch(err => console.error('Error loading listings:', err));  // Log any errors
+  }, []); // Empty dependency array means this runs once when the component mounts
 
-      <main>
-        <div>
-          {listings.length > 0 ? (
-            listings.map((item, index) => (
-              <div key={index} className="bid-item">
-                <NavLink to={`/item_info/${index}`}>
-                  <img src={item.image || "/ShirtDemo.png"} width="200" alt={item.name} className="img-fluid" />
-                  <p>{item.name} | ${item.cost} | {item.bids}/{item.bidsNeeded} Bids</p>
-                </NavLink>
-              </div>
-            ))
-          ) : (
-            <p>No listings available.</p>
-          )}
-        </div>
-      </main>
-    </>
+  return (
+    <div>
+      <h1>All Listings</h1>
+      {listings.length === 0 && <p>No listings available.</p>}
+      <ul>
+        {listings.map((item, idx) => (
+          <li key={idx}>
+            <strong>{item.name}</strong> - ${item.cost} ({item.bids} bids)
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
