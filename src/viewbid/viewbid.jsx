@@ -7,7 +7,7 @@ export function Viewbid() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch listings from the backend API
+    // Fetch listings from the backend API WORKS RAAAHH
     fetch('/api/listings')
       .then(async res => {
         const text = await res.text();
