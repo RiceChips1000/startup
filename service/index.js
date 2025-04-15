@@ -112,8 +112,8 @@ const verifyAuth = async (req, res, next) => {
 // ---------- LISTINGS ROUTES ----------
 
 // Create a new listing
-apiRouter.post('/listings', (req, res) => {
-  console.log('Received listing data:', req.body); // <-- Log for debugging
+apiRouter.post('/listings', verifyAuth, (req, res) => {
+  console.log('Received listing data:', req.body);
   
   const { name, cost, bidsNeeded, about, image } = req.body;
 
@@ -137,7 +137,7 @@ apiRouter.post('/listings', (req, res) => {
 
 // Get all listings
 apiRouter.get('/listings', (_req, res) => {
-console.log('GET /api/listings called');
+  console.log('GET /api/listings called');
   res.send(listings);
 });
 
@@ -150,7 +150,7 @@ apiRouter.get('/listings/:id', (req, res) => {
 });
 
 // Bid on a listing
-apiRouter.post('/listings/:id/bid', (req, res) => {
+apiRouter.post('/listings/:id/bid', verifyAuth, (req, res) => {
   const id = parseInt(req.params.id);
   const listing = listings[id];
   if (!listing) return res.status(404).send({ msg: 'Item not found' });
@@ -168,7 +168,7 @@ apiRouter.post('/listings/:id/bid', (req, res) => {
 });
 
 // Remove listing (seller only)
-apiRouter.delete('/listings/:id', (req, res) => {
+apiRouter.delete('/listings/:id', verifyAuth, (req, res) => {
   const id = parseInt(req.params.id);
   const listing = listings[id];
   if (!listing) return res.status(404).send({ msg: 'Item not found' });
@@ -186,13 +186,13 @@ apiRouter.delete('/listings/:id', (req, res) => {
 // ---------- CART ROUTES ----------
 
 // Get cart
-apiRouter.get('/cart', (req, res) => {
+apiRouter.get('/cart', verifyAuth, (req, res) => {
   const userEmail = req.user.email;
   res.send(carts[userEmail] || []);
 });
 
 // Remove item from cart
-apiRouter.post('/cart/remove', (req, res) => {
+apiRouter.post('/cart/remove', verifyAuth, (req, res) => {
   const userEmail = req.user.email;
   const itemName = req.body.name;
 
@@ -201,7 +201,7 @@ apiRouter.post('/cart/remove', (req, res) => {
 });
 
 // Purchase cart
-apiRouter.post('/cart/purchase', (req, res) => {
+apiRouter.post('/cart/purchase', verifyAuth, (req, res) => {
   const userEmail = req.user.email;
   carts[userEmail] = [];
   res.send({ msg: 'Purchase complete, cart cleared!' });
