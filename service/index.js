@@ -2,13 +2,10 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const express = require('express');
 const uuid = require('uuid');
+const db = require('./database.js');
 const app = express();
 
 const authCookieName = 'token';
-
-let users = [];
-let listings = [];
-let carts = {}; // { email: [cartItems] }
 
 // The service port
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
@@ -28,13 +25,19 @@ apiRouter.post('/auth/create', async (req, res, next) => {
       console.log('Missing email or password');
       return res.status(400).send({ msg: 'Email and password are required' });
     }
-    const existingUser = await findUser('email', req.body.email);
+    const existingUser = await db.getUser(req.body.email);
     if (existingUser) {
       console.log('User already exists:', req.body.email);
       res.status(409).send({ msg: 'Existing user' });
     } else {
       console.log('Creating new user:', req.body.email);
-      const user = await createUser(req.body.email, req.body.password);
+      const passwordHash = await bcrypt.hash(req.body.password, 10);
+      const user = {
+        email: req.body.email,
+        password: passwordHash,
+        token: uuid.v4()
+      };
+      await db.addUser(user);
       setAuthCookie(res, user.token);
       console.log('User created successfully:', req.body.email);
       res.send({ email: user.email });
@@ -52,7 +55,7 @@ apiRouter.post('/auth/login', async (req, res, next) => {
       console.log('Missing email or password');
       return res.status(400).send({ msg: 'Email and password are required' });
     }
-    const user = await findUser('email', req.body.email);
+    const user = await db.getUser(req.body.email);
     console.log('User found:', !!user);
     
     if (user) {
@@ -61,6 +64,7 @@ apiRouter.post('/auth/login', async (req, res, next) => {
       
       if (passwordMatch) {
         user.token = uuid.v4();
+        await db.updateUser(user);
         setAuthCookie(res, user.token);
         console.log('Login successful:', req.body.email);
         res.send({ email: user.email });
@@ -76,7 +80,7 @@ apiRouter.post('/auth/login', async (req, res, next) => {
 });
 
 apiRouter.delete('/auth/logout', async (req, res) => {
-  const user = await findUser('token', req.cookies[authCookieName]);
+  const user = await db.getUser(req.cookies[authCookieName]);
   if (user) delete user.token;
   res.clearCookie(authCookieName);
   res.status(204).end();
@@ -93,7 +97,7 @@ const verifyAuth = async (req, res, next) => {
       return res.status(401).send({ msg: 'Unauthorized' });
     }
     
-    const user = await findUser('token', token);
+    const user = await db.getUser(req.cookies[authCookieName]);
     console.log('User found for token:', !!user);
     
     if (user) {
@@ -110,35 +114,29 @@ const verifyAuth = async (req, res, next) => {
 };
 
 // ---------- LISTINGS ROUTES ----------
-
-// Create a new listing
-apiRouter.post('/listings', verifyAuth, (req, res) => {
-  console.log('Received listing data:', req.body);
-  
-  const { name, cost, bidsNeeded, about, image } = req.body;
-
-  if (!name || !cost || !bidsNeeded || !about) {
-    return res.status(400).send({ msg: 'Missing required fields' });
+apiRouter.get('/listings', async (_req, res) => {
+  try {
+    const listings = await db.getListings();
+    res.send(listings);
+  } catch (error) {
+    console.error('Error getting listings:', error);
+    res.status(500).send({ msg: 'Error getting listings' });
   }
-
-  const listing = {
-    name,
-    cost,
-    bidsNeeded,
-    about,
-    image: image || null,
-    bids: 0,
-    seller: req.user.email,
-  };
-
-  listings.push(listing);
-  res.send({ msg: 'Listing created', listing });
 });
 
-// Get all listings
-apiRouter.get('/listings', (_req, res) => {
-  console.log('GET /api/listings called');
-  res.send(listings);
+apiRouter.post('/listings', async (req, res) => {
+  try {
+    const listing = {
+      ...req.body,
+      bids: 0,
+      createdAt: new Date()
+    };
+    await db.addListing(listing);
+    res.send({ msg: 'Listing created', listing });
+  } catch (error) {
+    console.error('Error creating listing:', error);
+    res.status(500).send({ msg: 'Error creating listing' });
+  }
 });
 
 // Get a specific listing by index
@@ -150,21 +148,44 @@ apiRouter.get('/listings/:id', (req, res) => {
 });
 
 // Bid on a listing
-apiRouter.post('/listings/:id/bid', verifyAuth, (req, res) => {
-  const id = parseInt(req.params.id);
-  const listing = listings[id];
-  if (!listing) return res.status(404).send({ msg: 'Item not found' });
+apiRouter.post('/listings/:id/bid', async (req, res) => {
+  try {
+    const listingId = req.params.id;
+    let listing;
+    
+    // Try to find listing by MongoDB ID first
+    try {
+      listing = await db.getListingById(listingId);
+    } catch (error) {
+      // If that fails, try to find by index
+      const listings = await db.getListings();
+      const index = parseInt(listingId);
+      if (isNaN(index) || index < 0 || index >= listings.length) {
+        return res.status(404).send({ msg: 'Listing not found' });
+      }
+      listing = listings[index];
+    }
+    
+    if (!listing) {
+      return res.status(404).send({ msg: 'Listing not found' });
+    }
 
-  const userEmail = req.user.email;
-  carts[userEmail] = carts[userEmail] || [];
+    const bid = {
+      listingId: listing._id || listingId,
+      userEmail: req.body.userEmail,
+      amount: req.body.amount,
+      createdAt: new Date()
+    };
 
-  const alreadyBid = carts[userEmail].some(item => item.name === listing.name);
-  if (alreadyBid) return res.status(400).send({ msg: 'Already bid on this item' });
+    await db.addBid(bid);
+    listing.bids += 1;
+    await db.updateListing(listing._id || listingId, { bids: listing.bids });
 
-  listing.bids += 1;
-  carts[userEmail].push(listing);
-
-  res.send({ msg: 'Bid placed', updatedListing: listing });
+    res.send({ msg: 'Bid placed', listing });
+  } catch (error) {
+    console.error('Error placing bid:', error);
+    res.status(500).send({ msg: 'Error placing bid' });
+  }
 });
 
 // Remove listing (seller only)
@@ -184,60 +205,44 @@ apiRouter.delete('/listings/:id', verifyAuth, (req, res) => {
 });
 
 // ---------- CART ROUTES ----------
-
-// Get cart
-apiRouter.get('/cart', verifyAuth, (req, res) => {
-  const userEmail = req.user.email;
-  res.send(carts[userEmail] || []);
+apiRouter.get('/cart', async (req, res) => {
+  try {
+    const userEmail = req.query.userEmail;
+    const cart = await db.getCart(userEmail);
+    res.send(cart?.items || []);
+  } catch (error) {
+    console.error('Error getting cart:', error);
+    res.status(500).send({ msg: 'Error getting cart' });
+  }
 });
 
-// Remove item from cart
-apiRouter.post('/cart/remove', verifyAuth, (req, res) => {
-  const userEmail = req.user.email;
-  const itemName = req.body.name;
-
-  carts[userEmail] = (carts[userEmail] || []).filter(item => item.name !== itemName);
-  res.send({ msg: 'Item removed from cart' });
+apiRouter.post('/cart/remove', async (req, res) => {
+  try {
+    const { userEmail, itemName } = req.body;
+    const cart = await db.getCart(userEmail);
+    if (cart) {
+      const items = cart.items.filter(item => item.name !== itemName);
+      await db.updateCart(userEmail, items);
+    }
+    res.send({ msg: 'Item removed from cart' });
+  } catch (error) {
+    console.error('Error removing from cart:', error);
+    res.status(500).send({ msg: 'Error removing from cart' });
+  }
 });
 
-// Purchase cart
-apiRouter.post('/cart/purchase', verifyAuth, (req, res) => {
-  const userEmail = req.user.email;
-  carts[userEmail] = [];
-  res.send({ msg: 'Purchase complete, cart cleared!' });
+apiRouter.post('/cart/purchase', async (req, res) => {
+  try {
+    const { userEmail } = req.body;
+    await db.clearCart(userEmail);
+    res.send({ msg: 'Purchase complete, cart cleared!' });
+  } catch (error) {
+    console.error('Error purchasing cart:', error);
+    res.status(500).send({ msg: 'Error purchasing cart' });
+  }
 });
 
 // ---------- HELPERS ----------
-
-async function createUser(email, password) {
-  console.log('Creating user in database');
-  try {
-    const passwordHash = await bcrypt.hash(password, 10);
-    const user = { email, password: passwordHash, token: uuid.v4() };
-    users.push(user);
-    console.log('User created in database:', email);
-    return user;
-  } catch (error) {
-    console.error('Error creating user:', error);
-    throw error;
-  }
-}
-
-async function findUser(field, value) {
-  console.log(`Finding user by ${field}:`, value);
-  try {
-    if (!value) {
-      console.log('No value provided for findUser');
-      return null;
-    }
-    const user = users.find((u) => u[field] === value);
-    console.log('User found:', !!user);
-    return user;
-  } catch (error) {
-    console.error('Error finding user:', error);
-    throw error;
-  }
-}
 
 function setAuthCookie(res, authToken) {
   res.cookie(authCookieName, authToken, {

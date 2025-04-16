@@ -6,6 +6,7 @@ export function Item_Info() {
   const [bids, setBids] = useState(0);
   const { id } = useParams();
   const navigate = useNavigate();
+  const userName = localStorage.getItem('userName');
 
   useEffect(() => {
     fetch(`/api/listings/${id}`)
@@ -18,16 +19,38 @@ export function Item_Info() {
   }, [id]);
 
   const handleBid = async () => {
-    const res = await fetch(`/api/listings/${id}/bid`, { method: 'POST' });
-    if (res.ok) {
-      const data = await res.json();
-      setBids(data.updatedListing.bids);
-    } else if (res.status === 401) {
+    if (!userName) {
       alert("You need to log in to place a bid.");
       navigate('/login');
-    } else {
-      const error = await res.json();
-      alert(error.msg || "Something went wrong");
+      return;
+    }
+
+    if (!item) {
+      alert("Item information not loaded yet.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/listings/${id}/bid`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userEmail: userName,
+          amount: item.cost
+        })
+      });
+
+      const data = await res.json();
+      
+      if (res.ok) {
+        setBids(data.listing.bids);
+        alert("Bid placed successfully!");
+      } else {
+        alert(data.msg || "Failed to place bid");
+      }
+    } catch (error) {
+      console.error('Error placing bid:', error);
+      alert("An error occurred while placing your bid");
     }
   };
 
