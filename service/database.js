@@ -52,6 +52,26 @@ async function updateUser(user) {
   await userCollection.updateOne({ email: user.email }, { $set: user });
 }
 
+// Listiing functions
+async function addListing(listing) {
+  return listingCollection.insertOne(listing);
+}
+
+function getListings() {
+  return listingCollection.find({}).toArray();
+}
+
+function getListingById(id) {
+  return listingCollection.findOne({ _id: id });
+}
+
+async function updateListing(id, updates) {
+  return listingCollection.updateOne(
+    { _id: id },
+    { $set: updates }
+  );
+}
+
 
 
 module.exports = {
@@ -60,6 +80,12 @@ module.exports = {
   getUserByToken,
   addUser,
   updateUser,
+  
+  // Listing functions
+  addListing,
+  getListings,
+  getListingById,
+  updateListing,
   
 
 };
