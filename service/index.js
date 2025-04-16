@@ -285,8 +285,8 @@ apiRouter.delete('/listings/:id', async (req, res) => {
     res.status(500).send({ msg: 'Error removing listing' });
   }
 });
-
-// ---------- CART ROUTES ----------
+ //
+// ---------- CART ROUTES -----------
 apiRouter.get('/cart', async (req, res) => {
   try {
     // Get user from auth token
