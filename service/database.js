@@ -15,10 +15,10 @@ const cartCollection = db.collection('cart');
 (async function testConnection() {
   try {
     await client.connect();
-    console.log('Successfully connected to MongoDB client');
+    console.log('Successfully connected to MongoDB  client');
     
     await db.command({ ping: 1 });
-    console.log('Successfully pinged the database');
+    console.log('Successfully pinged the  database');
     
     // Test collections
     const collections = await db.listCollections().toArray();
