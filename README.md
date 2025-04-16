@@ -87,7 +87,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [X] **Images** - I added placeholder images for the seller listings/buyer bids.
 - [X] **Login placeholder** - There is a login and it also redirects to a seller/buyer page
 - [X] **DB data placeholder** - Input box and submit buttn for login, sellers can sumbit listings with info, listings are pulled from the database and displayed to the users.
-- [X] **WebSocket placeholder** - The counting of current bids on each listing is done in realtime by the bid votes users place.
+- [X] **WebSocket placeholder** - The counting of how many total listings their are to users in real time.
 
 ## 🚀 CSS deliverable
 
@@ -127,18 +127,18 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Static middleware for frontend** -  endpoints in `service/index` frontend calls static files and such
 - [x] **Calls to third party endpoints** - Cart page calls bear api and loads random bear image that increases the happines of the user which hopefully will make them buy more stuff.
 - [x] **Backend service endpoints** - Backend stuff in index, for cart, listings, and viewbid
-- [x] **Frontend calls service endpoints** - Frontend fetches and calls all needed information from backend and endpoints work,  and local storage has been phased out
+- [x] **Frontend calls service endpoints** - Frontend fetches and calls all needed information from backend and endpoints work,  and local storage has been phased out users are able to use listings call bids and all of that good stuff
 - [x] **Supports registration, login, logout, and restricted endpoint** - Fully supported authentication and restricted access to cart and stuff if user is not logged in and endpoints are restricted.
 
 ## 🚀 DB/Login deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **User registration** - I did not complete this part of the deliverable.
-- [ ] **User login and logout** - I did not complete this part of the deliverable.
-- [ ] **Stores data in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Restricts functionality based on authentication** - I did not complete this part of the deliverable.
+- [X] **User registration** - User info is stored with mongodb and is remembered
+- [X] **User login and logout** - User login and logout works good can only login with their password
+- [X] **Stores data in MongoDB** - Bids, usernames and passwords, listings and cart are stored in mongodb
+- [X] **Stores credentials in MongoDB** - Passwords and stuff are saved in mongo and encrypted and user info is saved
+- [X] **Restricts functionality based on authentication** - Users can only acess cart while logged in and cant bid unless logged in same thing with creating listings.
 
 ## 🚀 WebSocket deliverable
 
