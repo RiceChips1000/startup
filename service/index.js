@@ -139,12 +139,45 @@ apiRouter.post('/listings', async (req, res) => {
   }
 });
 
-// Get a specific listing by index
-apiRouter.get('/listings/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-  const listing = listings[id];
-  if (!listing) return res.status(404).send({ msg: 'Listing not found' });
-  res.send(listing);
+// Get a specific listing by ID
+apiRouter.get('/listings/:id', async (req, res) => {
+  try {
+    const listingId = req.params.id;
+    let listing;
+    
+    // Try to find listing by MongoDB ID first
+    try {
+      console.log("listingId", listingId)
+      listing = await db.getListingById(listingId);
+      if (!listing) {
+        console.log("listing not found")
+        throw new Error("Listing not found");
+      }
+    } catch (error) {
+      // If that fails, try to find by index
+
+      /**
+       * THIS IS THE IMPORTANT PART   SURE YOU UNDERSTAND IT
+       */
+      console.log("manually finding listing by index")
+      const listings = await db.getListings();
+      const index = parseInt(listingId);
+      if (isNaN(index) || index < 0 || index >= listings.length) {
+        return res.status(404).send({ msg: 'Listing not found' });
+      }
+      listing = listings[index];
+    }
+
+    if (!listing) {
+      console.log("listing not found")
+      return res.status(404).send({ msg: 'Listing not found' });
+    }
+    console.log("listing", listing)
+    res.send(listing);
+  } catch (error) {
+    console.error('Error getting listing:', error);
+    res.status(500).send({ msg: 'Error getting listing' });
+  }
 });
 
 // Bid on a listing
@@ -189,19 +222,42 @@ apiRouter.post('/listings/:id/bid', async (req, res) => {
 });
 
 // Remove listing (seller only)
-apiRouter.delete('/listings/:id', verifyAuth, (req, res) => {
-  const id = parseInt(req.params.id);
-  const listing = listings[id];
-  if (!listing) return res.status(404).send({ msg: 'Item not found' });
+apiRouter.delete('/listings/:id', async (req, res) => {
+  try {
+    const listingId = req.params.id;
+    const { userEmail } = req.body;
+    
+    if (!userEmail) {
+      return res.status(401).send({ msg: 'User email is required' });
+    }
 
-  if (listing.seller !== req.user.email) {
-    return res.status(403).send({ msg: 'Only the seller can remove this item' });
+    let listing;
+    try {
+      listing = await db.getListingById(listingId);
+    } catch (error) {
+      // If that fails, try to find by index
+      const listings = await db.getListings();
+      const index = parseInt(listingId);
+      if (isNaN(index) || index < 0 || index >= listings.length) {
+        return res.status(404).send({ msg: 'Listing not found' });
+      }
+      listing = listings[index];
+    }
+
+    if (!listing) {
+      return res.status(404).send({ msg: 'Listing not found' });
+    }
+
+    if (listing.seller !== userEmail) {
+      return res.status(403).send({ msg: 'Only the seller can remove this item' });
+    }
+
+    await db.deleteListing(listing._id || listingId);
+    res.send({ msg: 'Item removed successfully' });
+  } catch (error) {
+    console.error('Error removing listing:', error);
+    res.status(500).send({ msg: 'Error removing listing' });
   }
-
-  listings.splice(id, 1);
-  carts[req.user.email] = (carts[req.user.email] || []).filter(item => item.name !== listing.name);
-
-  res.send({ msg: 'Item removed' });
 });
 
 // ---------- CART ROUTES ----------

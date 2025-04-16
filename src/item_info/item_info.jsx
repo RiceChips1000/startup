@@ -14,6 +14,7 @@ export function Item_Info() {
       .then(data => {
         setItem(data);
         setBids(data.bids);
+        console.log("data", data)
       })
       .catch(err => console.error('Item not found:', err));
   }, [id]);
@@ -55,13 +56,34 @@ export function Item_Info() {
   };
 
   const handleRemove = async () => {
-    const res = await fetch(`/api/listings/${id}`, { method: 'DELETE' });
-    if (res.ok) {
-      alert("Item removed.");
-      navigate('/');
-    } else {
-      const err = await res.json();
-      alert(err.msg || "Couldn't remove item");
+    if (!userName) {
+      alert("You need to log in to remove an item.");
+      navigate('/login');
+      return;
+    }
+
+    if (!item) {
+      alert("Item information not loaded yet.");
+      return;
+    }
+
+    try {
+      const res = await fetch(`/api/listings/${id}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userEmail: userName })
+      });
+
+      if (res.ok) {
+        alert("Item removed successfully.");
+        navigate('/');
+      } else {
+        const error = await res.json();
+        alert(error.msg || "Couldn't remove item");
+      }
+    } catch (error) {
+      console.error('Error removing item:', error);
+      alert("An error occurred while removing the item");
     }
   };
 
@@ -79,7 +101,7 @@ export function Item_Info() {
 
       <h3><button onClick={handleBid}>Bid</button></h3>
 
-      {item.seller && (
+      {item.seller === userName && (
         <div>
           <button onClick={handleRemove}>Remove Item</button>
         </div>

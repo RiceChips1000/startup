@@ -15,7 +15,7 @@ const cartCollection = db.collection('cart');
 (async function testConnection() {
   try {
     await client.connect();
-    
+    console.log('Successfully connected to MongoDB client');
     
     await db.command({ ping: 1 });
     console.log('Successfully pinged the database');
@@ -36,7 +36,6 @@ const cartCollection = db.collection('cart');
 
 // User functions
 function getUser(email) {
-    console.log('Getting user with email:', email);
   return userCollection.findOne({ email: email });
 }
 
@@ -52,16 +51,16 @@ async function updateUser(user) {
   await userCollection.updateOne({ email: user.email }, { $set: user });
 }
 
-// Listiing functions
+// Listing functions
 async function addListing(listing) {
   return listingCollection.insertOne(listing);
 }
 
-function getListings() {
+async function getListings() {
   return listingCollection.find({}).toArray();
 }
 
-function getListingById(id) {
+async function getListingById(id) {
   return listingCollection.findOne({ _id: id });
 }
 
@@ -72,20 +71,39 @@ async function updateListing(id, updates) {
   );
 }
 
+async function deleteListing(id) {
+  return listingCollection.deleteOne({ _id: id });
+}
+
 // Bid functions
 async function addBid(bid) {
   return bidCollection.insertOne(bid);
 }
 
-function getBidsForListing(listingId) {
+async function getBidsForListing(listingId) {
   return bidCollection.find({ listingId: listingId }).toArray();
 }
 
-function getBidsForUser(userEmail) {
+async function getBidsForUser(userEmail) {
   return bidCollection.find({ userEmail: userEmail }).toArray();
 }
 
+// Cart functions
+async function getCart(userEmail) {
+  return cartCollection.findOne({ userEmail: userEmail });
+}
 
+async function updateCart(userEmail, items) {
+  return cartCollection.updateOne(
+    { userEmail: userEmail },
+    { $set: { items: items } },
+    { upsert: true }
+  );
+}
+
+async function clearCart(userEmail) {
+  return cartCollection.deleteOne({ userEmail: userEmail });
+}
 
 module.exports = {
   // User functions
@@ -99,12 +117,16 @@ module.exports = {
   getListings,
   getListingById,
   updateListing,
+  deleteListing,
   
   // Bid functions
   addBid,
   getBidsForListing,
   getBidsForUser,
   
- 
+  // Cart functions
+  getCart,
+  updateCart,
+  clearCart
 };
 
