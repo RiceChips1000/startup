@@ -15,7 +15,7 @@ const cartCollection = db.collection('cart');
 (async function testConnection() {
   try {
     await client.connect();
-    
+    console.log('Successfully connected to MongoDB client');
     
     await db.command({ ping: 1 });
     console.log('Successfully pinged the database');
@@ -36,7 +36,6 @@ const cartCollection = db.collection('cart');
 
 // User functions
 function getUser(email) {
-    console.log('Getting user with email:', email);
   return userCollection.findOne({ email: email });
 }
 
@@ -85,7 +84,22 @@ function getBidsForUser(userEmail) {
   return bidCollection.find({ userEmail: userEmail }).toArray();
 }
 
+// Cart functions
+async function getCart(userEmail) {
+  return cartCollection.findOne({ userEmail: userEmail });
+}
 
+async function updateCart(userEmail, items) {
+  return cartCollection.updateOne(
+    { userEmail: userEmail },
+    { $set: { items: items } },
+    { upsert: true }
+  );
+}
+
+async function clearCart(userEmail) {
+  return cartCollection.deleteOne({ userEmail: userEmail });
+}
 
 module.exports = {
   // User functions
@@ -105,6 +119,9 @@ module.exports = {
   getBidsForListing,
   getBidsForUser,
   
- 
+  // Cart functions
+  getCart,
+  updateCart,
+  clearCart
 };
 
