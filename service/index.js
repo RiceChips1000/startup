@@ -219,16 +219,18 @@ apiRouter.post('/listings/:id/bid', async (req, res) => {
       createdAt: new Date()
     };
 
-    await db.addBid(bid);
-    listing.bids += 1;
-    await db.updateListing(listing._id || listingId, { bids: listing.bids });
+    
 
     // Add to cart
     const cart = await db.getCart(req.body.userEmail) || { items: [] };
     console.log("cart", cart)
-    const itemAlreadyInCart = cart.items.some(item => item._id === listing._id || item._id === listingId);
-    
+    const itemAlreadyInCart = cart.items.some(item => item._id.equals(listing._id) || item._id.equals(listingId));
+    console.log("listing._id", listing._id)
+    console.log("listingId", listingId)
     if (!itemAlreadyInCart) {
+      await db.addBid(bid);
+      listing.bids += 1;
+      await db.updateListing(listing._id || listingId, { bids: listing.bids });
       cart.items.push({
         _id: listing._id || listingId,
         name: listing.name,
@@ -237,6 +239,9 @@ apiRouter.post('/listings/:id/bid', async (req, res) => {
         seller: listing.seller
       });
       await db.updateCart(req.body.userEmail, cart.items);
+    }
+    else {
+      return res.status(400).send({ msg: 'Item already in cart' });
     }
 
     res.send({ msg: 'Bid placed', listing });
@@ -314,13 +319,26 @@ apiRouter.get('/cart', async (req, res) => {
 
 apiRouter.post('/cart/remove', async (req, res) => {
   try {
-    const { userEmail, itemName } = req.body;
-    const cart = await db.getCart(userEmail);
-    if (cart) {
-      const items = cart.items.filter(item => item.name !== itemName);
-      await db.updateCart(userEmail, items);
+    const token = req.cookies[authCookieName];
+    if (!token) {
+      return res.status(401).send({ msg: 'Unauthorized' });
     }
-    res.send({ msg: 'Item removed from cart' });
+    const user = await db.getUserByToken(token);
+    if (!user) {
+      return res.status(401).send({ msg: 'Unauthorized' });
+    }
+    const userEmail = user.email;
+    const itemName = req.body.name;
+    const cart = await db.getCart(userEmail);
+    console.log("cart (in remove function)", cart)
+    if (cart) {
+      await db.removeFromCart(userEmail, itemName);
+      res.send({ msg: 'Item removed from cart' });
+    }
+    else {
+      return res.status(400).send({ msg: 'Item not in cart' });
+    }
+    
   } catch (error) {
     console.error('Error removing from cart:', error);
     res.status(500).send({ msg: 'Error removing from cart' });

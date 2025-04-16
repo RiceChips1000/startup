@@ -102,6 +102,13 @@ async function updateCart(userEmail, items) {
   );
 }
 
+async function removeFromCart(userEmail, itemName) {
+  return await cartCollection.updateOne(
+    { userEmail: userEmail },
+    { $pull: { items: { name: itemName } } }
+  );
+}
+
 async function clearCart(userEmail) {
   return await cartCollection.deleteOne({ userEmail: userEmail });
 }
@@ -128,6 +135,7 @@ module.exports = {
   // Cart functions
   getCart,
   updateCart,
-  clearCart
+  clearCart,
+  removeFromCart
 };
 
