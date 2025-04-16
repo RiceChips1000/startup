@@ -15,7 +15,7 @@ const cartCollection = db.collection('cart');
 (async function testConnection() {
   try {
     await client.connect();
-    console.log('Successfully connected to MongoDB client');
+    
     
     await db.command({ ping: 1 });
     console.log('Successfully pinged the database');
@@ -72,6 +72,19 @@ async function updateListing(id, updates) {
   );
 }
 
+// Bid functions
+async function addBid(bid) {
+  return bidCollection.insertOne(bid);
+}
+
+function getBidsForListing(listingId) {
+  return bidCollection.find({ listingId: listingId }).toArray();
+}
+
+function getBidsForUser(userEmail) {
+  return bidCollection.find({ userEmail: userEmail }).toArray();
+}
+
 
 
 module.exports = {
@@ -87,6 +100,11 @@ module.exports = {
   getListingById,
   updateListing,
   
-
+  // Bid functions
+  addBid,
+  getBidsForListing,
+  getBidsForUser,
+  
+ 
 };
 
