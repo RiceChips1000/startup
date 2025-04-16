@@ -64,7 +64,17 @@ export function Cart() {
   };
 
   const purchaseCart = async () => {
-    const res = await fetch('/api/cart/purchase', { method: 'POST' });
+    const userName = localStorage.getItem('userName');
+    if (!userName) {
+      alert('You need to be logged in to make a purchase');
+      return;
+    }
+
+    const res = await fetch('/api/cart/purchase', { 
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userEmail: userName })
+    });
     if (res.ok) {
       alert('Purchase successful!');
       setCartItems([]);

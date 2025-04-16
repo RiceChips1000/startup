@@ -190,7 +190,6 @@ apiRouter.post('/listings/:id/bid', async (req, res) => {
     try {
       listing = await db.getListingById(listingId);
       if (!listing) {
-        console.log("listing not found")
         throw new Error("Listing not found");
       }
     } catch (error) {
@@ -260,10 +259,15 @@ apiRouter.delete('/listings/:id', async (req, res) => {
     let listing;
     try {
       listing = await db.getListingById(listingId);
+      if (!listing) {
+        console.log("listing not found, trying manual search")
+        throw new Error("Listing not found");
+      }
     } catch (error) {
       // If that fails, try to find by index
       const listings = await db.getListings();
       const index = parseInt(listingId);
+      console.log("index", index)
       if (isNaN(index) || index < 0 || index >= listings.length) {
         return res.status(404).send({ msg: 'Listing not found' });
       }

@@ -15,11 +15,7 @@ const cartCollection = db.collection('cart');
 (async function testConnection() {
   try {
     await client.connect();
-<<<<<<< HEAD
     console.log('Successfully connected to MongoDB client');
-=======
-    console.log('Successfully connected to MongoDB  client');
->>>>>>> 2874c347f52c89b85d0f2d609891db1a87507383
     
     await db.command({ ping: 1 });
     console.log('Successfully pinged the  database');
@@ -39,13 +35,8 @@ const cartCollection = db.collection('cart');
 })();
 
 // User functions
-<<<<<<< HEAD
 async function getUser(email) {
   return await userCollection.findOne({ email: email });
-=======
-function getUser(email) {
-  return userCollection.findOne({ email: email });
->>>>>>> 2874c347f52c89b85d0f2d609891db1a87507383
 }
 
 async function getUserByToken(token) {
@@ -81,6 +72,7 @@ async function updateListing(id, updates) {
 }
 
 async function deleteListing(id) {
+  console.log(listingCollection)
   return await listingCollection.deleteOne({ _id: id });
 }
 
@@ -99,19 +91,11 @@ async function getBidsForUser(userEmail) {
 
 // Cart functions
 async function getCart(userEmail) {
-<<<<<<< HEAD
   return await cartCollection.findOne({ userEmail: userEmail });
 }
 
 async function updateCart(userEmail, items) {
   return await cartCollection.updateOne(
-=======
-  return cartCollection.findOne({ userEmail: userEmail });
-}
-
-async function updateCart(userEmail, items) {
-  return cartCollection.updateOne(
->>>>>>> 2874c347f52c89b85d0f2d609891db1a87507383
     { userEmail: userEmail },
     { $set: { items: items } },
     { upsert: true }
@@ -119,11 +103,7 @@ async function updateCart(userEmail, items) {
 }
 
 async function clearCart(userEmail) {
-<<<<<<< HEAD
   return await cartCollection.deleteOne({ userEmail: userEmail });
-=======
-  return cartCollection.deleteOne({ userEmail: userEmail });
->>>>>>> 2874c347f52c89b85d0f2d609891db1a87507383
 }
 
 module.exports = {
