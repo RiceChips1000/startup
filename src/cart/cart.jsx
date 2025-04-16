@@ -37,7 +37,7 @@ export function Cart() {
         // Set default image for items without an image
         const itemsWithDefaultImages = data.map(item => ({
           ...item,
-          image: item.image || '/ShirtDemo.png'
+          image: item.image || 'https://files.catbox.moe/jgoh7b.png'
         }));
         setCartItems(itemsWithDefaultImages);
         console.log("cart items", itemsWithDefaultImages)
@@ -106,7 +106,7 @@ export function Cart() {
                 className="cart-item-image"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = '/ShirtDemo.png';
+                  e.target.src = 'https://files.catbox.moe/jgoh7b.png';
                 }}
               />
               <div className="cart-item-info">

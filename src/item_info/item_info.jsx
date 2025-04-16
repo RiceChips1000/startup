@@ -93,7 +93,7 @@ export function Item_Info() {
     <main>
       <h1>Item Info</h1>
       <div className="bid-item">
-        <img src={item.image || "/ShirtDemo.png"} width="200" alt={item.name} />
+        <img src={item.image || "https://files.catbox.moe/jgoh7b.png"} width="200" alt={item.name} />
         <p>{item.name} | ${item.cost} | {bids}/{item.bidsNeeded} Bids</p>
         <p>Seller: {item.seller}</p>
       </div>

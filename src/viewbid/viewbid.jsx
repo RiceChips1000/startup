@@ -39,7 +39,7 @@ export function Viewbid() {
               onClick={() => handleListingClick(idx)}
             >
               <img 
-                src={item.image || "/ShirtDemo.png"} 
+                src={item.image || "https://files.catbox.moe/jgoh7b.png"} 
                 alt={item.name}
                 className="listing-image"
               />
