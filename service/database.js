@@ -35,12 +35,12 @@ const cartCollection = db.collection('cart');
 })();
 
 // User functions
-function getUser(email) {
-  return userCollection.findOne({ email: email });
+async function getUser(email) {
+  return await userCollection.findOne({ email: email });
 }
 
-function getUserByToken(token) {
-  return userCollection.findOne({ token: token });
+async function getUserByToken(token) {
+  return await userCollection.findOne({ token: token });
 }
 
 async function addUser(user) {
@@ -53,48 +53,48 @@ async function updateUser(user) {
 
 // Listing functions
 async function addListing(listing) {
-  return listingCollection.insertOne(listing);
+  return await listingCollection.insertOne(listing);
 }
 
 async function getListings() {
-  return listingCollection.find({}).toArray();
+  return await listingCollection.find({}).toArray();
 }
 
 async function getListingById(id) {
-  return listingCollection.findOne({ _id: id });
+  return await listingCollection.findOne({ _id: id });
 }
 
 async function updateListing(id, updates) {
-  return listingCollection.updateOne(
+  return await listingCollection.updateOne(
     { _id: id },
     { $set: updates }
   );
 }
 
 async function deleteListing(id) {
-  return listingCollection.deleteOne({ _id: id });
+  return await listingCollection.deleteOne({ _id: id });
 }
 
 // Bid functions
 async function addBid(bid) {
-  return bidCollection.insertOne(bid);
+  return await bidCollection.insertOne(bid);
 }
 
 async function getBidsForListing(listingId) {
-  return bidCollection.find({ listingId: listingId }).toArray();
+  return await bidCollection.find({ listingId: listingId }).toArray();
 }
 
 async function getBidsForUser(userEmail) {
-  return bidCollection.find({ userEmail: userEmail }).toArray();
+  return await bidCollection.find({ userEmail: userEmail }).toArray();
 }
 
 // Cart functions
 async function getCart(userEmail) {
-  return cartCollection.findOne({ userEmail: userEmail });
+  return await cartCollection.findOne({ userEmail: userEmail });
 }
 
 async function updateCart(userEmail, items) {
-  return cartCollection.updateOne(
+  return await cartCollection.updateOne(
     { userEmail: userEmail },
     { $set: { items: items } },
     { upsert: true }
@@ -102,7 +102,7 @@ async function updateCart(userEmail, items) {
 }
 
 async function clearCart(userEmail) {
-  return cartCollection.deleteOne({ userEmail: userEmail });
+  return await cartCollection.deleteOne({ userEmail: userEmail });
 }
 
 module.exports = {

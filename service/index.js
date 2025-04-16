@@ -189,6 +189,10 @@ apiRouter.post('/listings/:id/bid', async (req, res) => {
     // Try to find listing by MongoDB ID first
     try {
       listing = await db.getListingById(listingId);
+      if (!listing) {
+        console.log("listing not found")
+        throw new Error("Listing not found");
+      }
     } catch (error) {
       // If that fails, try to find by index
       const listings = await db.getListings();
@@ -203,6 +207,12 @@ apiRouter.post('/listings/:id/bid', async (req, res) => {
       return res.status(404).send({ msg: 'Listing not found' });
     }
 
+    //console.log("manually finding listing by index")
+    //  const listings = await db.getListings();
+    //  const index = parseInt(listingId);
+    //  if (isNaN(index) || index < 0 || index >= listings.length) {
+    //    return res.status(404).send({ msg: 'Listing not found' });
+    //  }
     const bid = {
       listingId: listing._id || listingId,
       userEmail: req.body.userEmail,
@@ -213,6 +223,22 @@ apiRouter.post('/listings/:id/bid', async (req, res) => {
     await db.addBid(bid);
     listing.bids += 1;
     await db.updateListing(listing._id || listingId, { bids: listing.bids });
+
+    // Add to cart
+    const cart = await db.getCart(req.body.userEmail) || { items: [] };
+    console.log("cart", cart)
+    const itemAlreadyInCart = cart.items.some(item => item._id === listing._id || item._id === listingId);
+    
+    if (!itemAlreadyInCart) {
+      cart.items.push({
+        _id: listing._id || listingId,
+        name: listing.name,
+        cost: listing.cost,
+        image: listing.image,
+        seller: listing.seller
+      });
+      await db.updateCart(req.body.userEmail, cart.items);
+    }
 
     res.send({ msg: 'Bid placed', listing });
   } catch (error) {
@@ -263,8 +289,18 @@ apiRouter.delete('/listings/:id', async (req, res) => {
 // ---------- CART ROUTES ----------
 apiRouter.get('/cart', async (req, res) => {
   try {
-    const userEmail = req.query.userEmail;
-    const cart = await db.getCart(userEmail);
+    // Get user from auth token
+    const token = req.cookies[authCookieName];
+    if (!token) {
+      return res.status(401).send({ msg: 'Unauthorized' });
+    }
+    const user = await db.getUserByToken(token);
+    if (!user) {
+      return res.status(401).send({ msg: 'Unauthorized' });
+    }
+
+    console.log("getting cart for", user.email)
+    const cart = await db.getCart(user.email);
     res.send(cart?.items || []);
   } catch (error) {
     console.error('Error getting cart:', error);

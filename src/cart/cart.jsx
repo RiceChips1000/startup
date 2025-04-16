@@ -40,6 +40,7 @@ export function Cart() {
           image: item.image || '/ShirtDemo.png'
         }));
         setCartItems(itemsWithDefaultImages);
+        console.log("cart items", itemsWithDefaultImages)
       })
       .catch(err => {
         console.error(err.message);
