@@ -10,7 +10,7 @@ const WebSocket = require('ws');
 const authCookieName = 'token';
 
 // The service port
-const port = process.env.PORT || process.argv.length > 2 ? process.argv[2] : 4000;
+const port = process.env.PORT || process.argv.length > 2 ? process.argv[2] : 3000;
 
 app.use(express.json());
 app.use(cookieParser());
