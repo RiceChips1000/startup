@@ -3,10 +3,14 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   server: {
     proxy: {
-      '/api': 'http://localhost:4000',
+      '/api': {
+        target: process.env.VITE_API_URL || 'http://localhost:4000',
+        changeOrigin: true,
+      },
       '/ws': {
-        target: 'ws://localhost:4000',
+        target: process.env.VITE_WS_URL || 'ws://localhost:4000',
         ws: true,
+        changeOrigin: true,
       },
     },
   },

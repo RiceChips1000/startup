@@ -10,7 +10,7 @@ const WebSocket = require('ws');
 const authCookieName = 'token';
 
 // The service port
-const port = process.argv.length > 2 ? process.argv[2] : 4000;
+const port = process.env.PORT || process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(express.json());
 app.use(cookieParser());
@@ -398,23 +398,24 @@ function setAuthCookie(res, authToken) {
 
 // ---------- DEFAULT ROUTES ----------
 
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send({ 
-    type: err.name, 
-    message: err.message,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
-  });
+  res.status(500).send('Something broke!');
 });
 
-app.use((_req, res) => {
-  res.sendFile('index.html', { root: 'public' });
+app.use((req, res) => {
+  res.status(404).send('Not found');
 });
 
 // Start the server
 const server = app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });
 
 // Initialize WebSocket server
-peerProxy(server);
+try {
+  peerProxy(server);
+  console.log('WebSocket server initialized');
+} catch (error) {
+  console.error('Error initializing WebSocket server:', error);
+}

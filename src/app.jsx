@@ -18,7 +18,8 @@ function App() {
   const [recentListings, setRecentListings] = useState([]);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:4000/ws');
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const ws = new WebSocket(`${protocol}//${window.location.host}/ws`);
     
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
@@ -27,6 +28,14 @@ function App() {
         setLatestListing(message.listing);
         setRecentListings([message.listing, ...recentListings].slice(0, 5)); // Keep only the 5 most recent
       }
+    };
+
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket connection closed');
     };
 
     // Fetch initial listings
