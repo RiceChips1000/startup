@@ -4,7 +4,8 @@ const express = require('express');
 const uuid = require('uuid');
 const db = require('./database.js');
 const app = express();
-const {peerProxy} = require('./peerProxy.js');
+const {peerProxy, socketServer} = require('./peerProxy.js');
+const WebSocket = require('ws');
 
 const authCookieName = 'token';
 
@@ -127,16 +128,50 @@ apiRouter.get('/listings', async (_req, res) => {
 
 apiRouter.post('/listings', async (req, res) => {
   try {
+    // Validate required fields
+    if (!req.body.name || !req.body.cost || !req.body.bidsNeeded || !req.body.about) {
+      return res.status(400).send({ msg: 'Missing required fields' });
+    }
+
+    // Convert cost and bidsNeeded to numbers
+    const cost = parseFloat(req.body.cost);
+    const bidsNeeded = parseInt(req.body.bidsNeeded);
+
+    if (isNaN(cost) || isNaN(bidsNeeded)) {
+      return res.status(400).send({ msg: 'Cost and bids needed must be numbers' });
+    }
+
     const listing = {
-      ...req.body,
+      name: req.body.name,
+      cost: cost,
+      bidsNeeded: bidsNeeded,
+      about: req.body.about,
+      image: req.body.image || null,
+      seller: req.body.seller,
       bids: 0,
       createdAt: new Date()
     };
-    await db.addListing(listing);
+
+    console.log('Creating listing:', listing);
+    const result = await db.addListing(listing);
+    console.log('Listing created:', result);
+    
+    // Broadcast the new listing to all connected clients
+    if (socketServer) {
+      socketServer.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(JSON.stringify({
+            type: 'NEW_LISTING',
+            listing: listing
+          }));
+        }
+      });
+    }
+    
     res.send({ msg: 'Listing created', listing });
   } catch (error) {
     console.error('Error creating listing:', error);
-    res.status(500).send({ msg: 'Error creating listing' });
+    res.status(500).send({ msg: 'Error creating listing', error: error.message });
   }
 });
 
@@ -382,8 +417,10 @@ app.use((_req, res) => {
   res.sendFile('index.html', { root: 'public' });
 });
 
-app.listen(port, () => {
+// Start the server
+const server = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-peerProxy(httpService);
+// Initialize WebSocket server
+peerProxy(server);

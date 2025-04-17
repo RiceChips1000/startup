@@ -22,7 +22,6 @@ export function ListingItemInfo() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("userName", userName)
     if (!userName) {
       alert("You need to be logged in to create a listing.");
       return;
@@ -33,7 +32,7 @@ export function ListingItemInfo() {
       image: values.image ? URL.createObjectURL(values.image) : null,
       seller: userName
     };
-    console.log("submitting item", JSON.stringify(formData))
+
     const response = await fetch('/api/listings', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

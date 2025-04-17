@@ -1,9 +1,9 @@
 const { WebSocketServer } = require('ws');
 
+let socketServer; // Declare socketServer as a variable
 
 function peerProxy(httpServer) {
-  // Create a websocket object
-  const socketServer = new WebSocketServer({ server: httpServer });
+  socketServer = new WebSocketServer({ server: httpServer });
 
   socketServer.on('connection', (socket) => {
     socket.isAlive = true;
@@ -34,4 +34,4 @@ function peerProxy(httpServer) {
   }, 10000);
 }
 
-module.exports = { peerProxy };
+module.exports = { peerProxy, socketServer }; // Export socketServer

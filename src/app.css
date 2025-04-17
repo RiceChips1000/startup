@@ -199,3 +199,27 @@ div a {
         display: none;
     }
   }
+
+.latest-listing {
+  background-color: #f8f9fa;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.latest-listing h3 {
+  color: #28a745;
+  margin: 0;
+}
+
+.latest-listing p {
+  margin: 5px 0;
+  font-size: 1.1em;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
