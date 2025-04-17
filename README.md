@@ -66,7 +66,7 @@ I am going to use the required technologies in the following ways.
   - submitting bids
   - showing total bids
 - **DB/Login** - Store users, bid data, listing data, Register and login users. Securely store users and only allow bidding on athenticated accounts.
-- **WebSocket** - As each user bids, total bids are listed to all users. As sellers send out listings, new listings are populated for all users.
+- **WebSocket** - Shows newest bids to users updates as the listings are created
 
 ## 🚀 AWS deliverable
 
