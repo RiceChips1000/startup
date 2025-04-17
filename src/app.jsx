@@ -15,16 +15,26 @@ function App() {
   const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
   const [authState, setAuthState] = useState(currentAuthState);
   const [latestListing, setLatestListing] = useState(null);
+  const [recentListings, setRecentListings] = useState([]);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:3000/ws');
+    const ws = new WebSocket('ws://localhost:4000/ws');
     
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
       if (message.type === 'NEW_LISTING') {
         setLatestListing(message.listing);
+        setRecentListings(prev => [message.listing, ...prev].slice(0, 5)); // Keep only the 5 most recent
       }
     };
+
+    // Fetch initial listings
+    fetch('/api/listings')
+      .then(res => res.json())
+      .then(data => {
+        setRecentListings(data.slice(0, 5)); // Get the 5 most recent listings
+      })
+      .catch(err => console.error('Error fetching listings:', err));
 
     return () => ws.close();
   }, []);
@@ -81,9 +91,18 @@ function App() {
           <Route path='*' element={<NotFound />} />
         </Routes>
 
-        <h2>Most Recent Listings</h2>
-        <div className="listing-container">
-          {/* Render items from WebSocket */}
+        <div className="recent-listings">
+          <h2>Most Recent Listings</h2>
+          <div className="listing-container">
+            {recentListings.map((listing, index) => (
+              <div key={index} className="listing-item">
+                <h3>{listing.name}</h3>
+                <p>Price: ${listing.cost}</p>
+                <p>Seller: {listing.seller}</p>
+                <p>Bids: {listing.bids}/{listing.bidsNeeded}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
         <footer>
