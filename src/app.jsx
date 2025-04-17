@@ -22,9 +22,10 @@ function App() {
     
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data);
+      console.log('Received message:', message);
       if (message.type === 'NEW_LISTING') {
         setLatestListing(message.listing);
-        setRecentListings(prev => [message.listing, ...prev].slice(0, 5)); // Keep only the 5 most recent
+        setRecentListings([message.listing, ...recentListings].slice(0, 5)); // Keep only the 5 most recent
       }
     };
 

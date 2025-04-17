@@ -4,7 +4,7 @@ const express = require('express');
 const uuid = require('uuid');
 const db = require('./database.js');
 const app = express();
-const {peerProxy, socketServer} = require('./peerProxy.js');
+const {peerProxy, socketServer, broadcast} = require('./peerProxy.js');
 const WebSocket = require('ws');
 
 const authCookieName = 'token';
@@ -157,16 +157,10 @@ apiRouter.post('/listings', async (req, res) => {
     console.log('Listing created:', result);
     
     // Broadcast the new listing to all connected clients
-    if (socketServer) {
-      socketServer.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
-          client.send(JSON.stringify({
-            type: 'NEW_LISTING',
-            listing: listing
-          }));
-        }
-      });
-    }
+    broadcast({
+      type: 'NEW_LISTING',
+      listing: listing
+    });
     
     res.send({ msg: 'Listing created', listing });
   } catch (error) {
