@@ -144,8 +144,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable. 
+- [x] **Backend listens for WebSocket connection** - it listens for when bids are made/created to show to users
+- [x] **Frontend makes WebSocket connection** - recieving any listings that are made
+- [x] **Data sent over WebSocket connection** - Listings to all users
+- [x] **WebSocket data displayed** - Shows most recent listing works good
+- [x] **Application is fully functional** - Everything works and new bids are shown to users will help increase buying as they see new bids are placed
